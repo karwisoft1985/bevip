@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+ <!-- style pour le navigation scrollable  -->
+    <link rel="stylesheet" href="assets/css/scrollmenu.css">
+     
+  <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <title>Bevip</title>
+        
+		<!-- debut appel fichies css et js -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js_web_service/gestion_taches/gestion_tache.js"></script>
+		<script src="js_web_service/gestion_taches/type.js"></script>
+		<script src="js_web_service/login/info_connect.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+		<!-- debut appel fichier sqlite pour la création de la base de données local  -->
+		<script src="js_web_service/main/notif_msg.js"></script>
+	    <!-- fin appel fichier sqlite pour la création de la base de données local  -->
+		<script>
+	   
+	   var db = openDatabase("bevip", "1.0", "bevip", 200000);
+       var dataset;
+       var DataType;
+	   
+		$(document).ready(function () {		
+       var CheminComplet = window.location.search;
+       var id_store =CheminComplet.substring(CheminComplet.indexOf( "id_store=" )+9 ,CheminComplet.indexOf( "&&name=" ));
+       var name_store = decodeURIComponent(CheminComplet.substring(CheminComplet.indexOf( "&&name=" )+7 ,CheminComplet.length ));
+       db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, result) {
+
+                                dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];
+sessionStorage.setItem("title",name_store);
+
+db.transaction(function(tx) {tx.executeSql("select * from store where id_store='"+id_store+"'", [] ,
+		
+								function(tx, result) {
+
+dataset = result.rows;
+							
+									var erreur = document.getElementById('detailstore');
+
+									if (dataset.length > 0) {
+										erreur.innerHTML = "";
+									} else {
+										erreur.innerHTML = "<p align='center'>VIDE</p>";
+									}
+									
+                                    var div='';
+									
+										item = dataset.item(0);
+										
+										var name = item['name'];
+										var conseilds = item['conseil'];
+										if(lang=="fr"){
+											if(conseilds=='Read regularly is a good habit that gives you access to a huge quantity of knowledge and experience'){
+											conseilds='Lire régulièrement est une bonne habitude qui vous donne accès à une énorme quantité de connaissances et d\'expérience';
+											}
+											else if(conseilds=='Fruits and vegetables provide vitamins, minerals, fiber, etc. and are indisoensables for good health. Doctors often recommend at least 5 per day'){
+											conseilds='Les fruits et légumes apportent vitamines, minéraux, fibres, etc. et sont indispensables pour une bonne santé. Les médecins en recommandent souvent au moins 5 par jour';
+											}
+											else if(conseilds=='Saving regularly is essential to build your financial independence. Sets up a savings target.'){
+											conseilds='Economiser régulièrement est essentiel pour construire ton autonomie financière. Définit un objectif d\'épargne';
+											}
+											else if(conseilds=='Practice sport improves breathing capacity, strengthens many muscles of your body, and helps keep you healthy'){
+											conseilds='Pratiquer le sport améliore tes capacités respiratoires, renforce de nombreux muscles de ton corps et aide à te maintenir en bonne santé';
+											}
+											else if(conseilds=='attend conferences or seminars on subjects of your choice expand your expertise and your network and will make you a better professional'){
+											conseilds='Assister à des conférences ou des séminaires sur des sujets de ton choix étendra ton expertise et ton réseau et fera de toi un meilleur professionnel';
+											}
+											else if(conseilds=='I believe in luck, and I find that the harder I work, the more I have (Thomas Jefferson). Measures the number of hours you spend at work'){
+											conseilds='Je crois en la chance, et je m\'aperçois que, plus je travaille dur, plus j\'en ai (Thomas Jefferson). Mesure le nombre d\'heures que tu passes à travailler';
+											}
+											else if(conseilds=='Studied not to know more but to know better. Sets up an objective study hours per day or week'){
+											conseilds='Étudie, non pour savoir plus, mais pour savoir mieux. Fixe-toi un objectif d\'heures d\'étude par jour ou par semaine';
+											}
+											else if(conseilds=='Learn a language and access to many different cultures. Practice is the mother of success - lots of practice!'){
+											conseilds='Apprends une langue et accéde à de nombreuses cultures différentes. La pratique est mère du succès - beaucoup de pratique!';
+											}
+											else if(conseilds=='Whether your life is busy, at work or at home, always keep a place for friends'){
+											conseilds='Peu importe que ta vie soit occupée, au travail ou à la maison, il faut toujours garder une place pour les amis';
+											}
+											else if(conseilds=='Get involved as volunteers and spends time to the cause that you defend. There are so many organizations that are looking for people like you!'){
+											conseilds='Implique-toi de manière bénévole et passe du temps pour la cause que tu défends. Il y a tant d\'associations qui sont à la recherche de personnes comme toi!';
+											}
+											else if(conseilds=='Gives money to charities to help those in need'){
+											conseilds='Donne de l\'argent aux associations caritatives pour aider ceux qui sont dans le besoin';
+											}
+											else if(conseilds=='Sometimes we are absorbed in our busy voice, and we forget the essential: the family, the people who are our dearest'){
+											conseilds='Nous sommes parfois absorbés par nos vies très occupées, et nous en oublions l\'essentiel: la famille, les gens qui nous sont le plus chers';
+											}
+											else if(conseilds=='escapes the routine and go to the discovery of a new place with your family. You will begin the week refreshed and it will make a fool vien your family'){
+											conseilds='Échappe à la routine et pars à la découverte d\'un endroit nouveau avec ta famille. Tu commenceras la semaine régénérée et cela fera un bien fou à ta famille';
+											}
+											else if(conseilds=='the little things count a lot! make it a habit and strengthens your relationship'){
+											conseilds='Les petites attentions comptent énormément! Fais-en une habitude et renforce ta relation';
+											}
+											}
+								else if (lang == 'ar'){
+												if(conseilds=='Read regularly is a good habit that gives you access to a huge quantity of knowledge and experience'){
+											conseilds='القراءة بانتظام هي عادة جيدة تمكنك من الوصول إلى كمية هائلة من المعارف والخبرات';
+											}
+											else if(conseilds=='Fruits and vegetables provide vitamins, minerals, fiber, etc. and are indisoensables for good health. Doctors often recommend at least 5 per day'){
+											conseilds='الفواكه والخضروات توفر الفيتامينات والمعادن والألياف، الخ وهي ضرورية للصحة الجيدة. كثيرا ما يوصي الأطباء ما لا يقل عن 5 في اليوم';
+											}
+											else if(conseilds=='Saving regularly is essential to build your financial independence. Sets up a savings target.'){
+											conseilds='الإقتصاد بانتظام أمر ضروري لبناء الاستقلال المالي الخاص بك. حدد هدف التوفير';
+											}
+											else if(conseilds=='Practice sport improves breathing capacity, strengthens many muscles of your body, and helps keep you healthy'){
+											conseilds='ممارسة الرياضة تحسن قدرتك على التنفس، ويقوي عضلات كثيرة في الجسم، ويساعد على الحفاظ على صحتك';
+											}
+											else if(conseilds=='attend conferences or seminars on subjects of your choice expand your expertise and your network and will make you a better professional'){
+											conseilds='المشاركة في مؤتمرات أو ندوات حول مواضيع من اختيارك توسع من خبرتك و تجعلك محترف أفضل';
+											}
+											else if(conseilds=='I believe in luck, and I find that the harder I work, the more I have (Thomas Jefferson). Measures the number of hours you spend at work'){
+											conseilds='أعتقد في الحظ، وأجد أن كلما أعمل أكثر، أحقق ذاتي أكثر (توماس جيفرسون). احسب عدد الساعات التي تقضيها في العمل';
+											}
+											else if(conseilds=='Studied not to know more but to know better. Sets up an objective study hours per day or week'){
+											conseilds='ادرس، ليس لمعرفة أكثر ولكن لمعرفة أفضل. ضع عدد لساعات دراسة في يوم أو أسبوع';
+											}
+											else if(conseilds=='Learn a language and access to many different cultures. Practice is the mother of success - lots of practice!'){
+											conseilds='تعلم لغة وتعرف على العديد من الثقافات المختلفة. الممارسة هي أم النجاح - الكثير من الممارسة';
+											}
+											else if(conseilds=='Whether your life is busy, at work or at home, always keep a place for friends'){
+											conseilds='مهما كانت حياتك مشغولة، في العمل أو في المنزل، لا بد من ترك مكان للأصدقاء';
+											}
+											else if(conseilds=='Get involved as volunteers and spends time to the cause that you defend. There are so many organizations that are looking for people like you!'){
+											conseilds='تطوع واقض وقتا للدفاع عن القضية التي تتبناها. هناك الكثير من الجمعيات التي تبحث عن شخص مثلك';
+											}
+											else if(conseilds=='Gives money to charities to help those in need'){
+											conseilds='اعط المال للجمعيات الخيرية لمساعدة المحتاجين';
+											}
+											else if(conseilds=='Sometimes we are absorbed in our busy voice, and we forget the essential: the family, the people who are our dearest'){
+											conseilds='في بعض الأحيان ننشغل في حياتنا، وننسا الأساسيات: الأسرة، والناس الذين هم أعز ما لدينا';
+											}
+											else if(conseilds=='escapes the routine and go to the discovery of a new place with your family. You will begin the week refreshed and it will make a fool vien your family'){
+											conseilds='ابتعد عن الروتين واذهب إلى اكتشاف مكان جديد مع عائلتك. سوف تبدأ الأسبوع بنشاط وتعطي شحنة معنوية لأسرتك';
+											}
+											else if(conseilds=='the little things count a lot! make it a habit and strengthens your relationship'){
+											conseilds='الأشياء الصغيرة تحدث الفرق! اجعل منها عادة لتقوية علاقتك';
+											}
+									}
+									else {
+											conseilds=conseilds;
+											}
+									document.getElementById("textbot").value = conseilds; 
+											play_bot(conseilds);
+										div +='<p style="text-align:center;padding:10px;">'+conseilds+'</p>';
+										
+									$("#detailstore").html(div);
+});
+});
+});
+});
+});
+
+     function play_bot(conseilds) {
+	db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, result) {
+
+                                dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];
+	         	if (lang == 'ar'){
+				if(conseilds=='القراءة بانتظام هي عادة جيدة تمكنك من الوصول إلى كمية هائلة من المعارف والخبرات'){
+		var media = new Media("/android_asset/www/assets/read.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='الفواكه والخضروات توفر الفيتامينات والمعادن والألياف، الخ وهي ضرورية للصحة الجيدة. كثيرا ما يوصي الأطباء ما لا يقل عن 5 في اليوم'){
+		var media = new Media("/android_asset/www/assets/food.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='الإقتصاد بانتظام أمر ضروري لبناء الاستقلال المالي الخاص بك. حدد هدف التوفير'){
+		var media = new Media("/android_asset/www/assets/economize.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='ممارسة الرياضة تحسن قدرتك على التنفس، ويقوي عضلات كثيرة في الجسم، ويساعد على الحفاظ على صحتك'){
+		var media = new Media("/android_asset/www/assets/sport.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='المشاركة في مؤتمرات أو ندوات حول مواضيع من اختيارك توسع من خبرتك و تجعلك محترف أفضل'){
+		var media = new Media("/android_asset/www/assets/conference.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='أعتقد في الحظ، وأجد أن كلما أعمل أكثر، أحقق ذاتي أكثر (توماس جيفرسون). احسب عدد الساعات التي تقضيها في العمل'){
+		var media = new Media("/android_asset/www/assets/work.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='ادرس، ليس لمعرفة أكثر ولكن لمعرفة أفضل. ضع عدد لساعات دراسة في يوم أو أسبوع'){
+		var media = new Media("/android_asset/www/assets/study.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='تعلم لغة وتعرف على العديد من الثقافات المختلفة. الممارسة هي أم النجاح - الكثير من الممارسة'){
+		var media = new Media("/android_asset/www/assets/langue.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='مهما كانت حياتك مشغولة، في العمل أو في المنزل، لا بد من ترك مكان للأصدقاء'){
+		var media = new Media("/android_asset/www/assets/amis.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='تطوع واقض وقتا للدفاع عن القضية التي تتبناها. هناك الكثير من الجمعيات التي تبحث عن شخص مثلك'){
+		var media = new Media("/android_asset/www/assets/volunteering.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='اعط المال للجمعيات الخيرية لمساعدة المحتاجين'){
+		var media = new Media("/android_asset/www/assets/association.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='في بعض الأحيان ننشغل في حياتنا، وننسا الأساسيات: الأسرة، والناس الذين هم أعز ما لدينا'){
+		var media = new Media("/android_asset/www/assets/famille.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='ابتعد عن الروتين واذهب إلى اكتشاف مكان جديد مع عائلتك. سوف تبدأ الأسبوع بنشاط وتعطي شحنة معنوية لأسرتك'){
+		var media = new Media("/android_asset/www/assets/week-end.mp3", null, function (e) {
+    });
+	}
+	else if(conseilds=='الأشياء الصغيرة تحدث الفرق! اجعل منها عادة لتقوية علاقتك'){
+		var media = new Media("/android_asset/www/assets/touches.mp3", null, function (e) {
+    });
+	}
+	
+	media.play();
+		}
+		else{
+        var u = new SpeechSynthesisUtterance();
+        var x = document.getElementById("frm");
+        var txt = "";
+        txt = x.elements[0].value
+        u.text = txt;
+		if(lang=="fr"){
+		u.lang = 'fr-FR';
+		}
+		else {
+		u.lang = 'en-US';
+		} 
+        speechSynthesis.speak(u);   
+		}
+     });
+     });
+	 }
+		
+function habitude(){
+var habit = document.getElementById("plan-habitude").checked;
+if (habit == true){
+document.getElementById('date_debut').style.display='none';
+document.getElementById('datefin').style.display='none';
+document.getElementById('frequency').style.display='none';
+}
+else{
+document.getElementById('date_debut').style.display='block';
+document.getElementById('datefin').style.display='block';
+document.getElementById('frequency').style.display='block';
+}
+}
+function rappeler(){
+var rap = document.getElementById("plan-rappel").checked;
+if (rap == true){
+document.getElementById('heurerappel').style.display='block';
+}
+else{
+document.getElementById('heurerappel').style.display='none';
+}
+}		
+
+ $(window).bind('beforeunload', function(event) {       
+ speechSynthesis.cancel();
+ });
+document.addEventListener("resume", onResume, false);
+function onResume() {
+   speechSynthesis.cancel();
+}		
+</script>
+<script src="js_web_service/login/notification.js"></script>
+		
+	<script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+      <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+      <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>		
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+			
+		</script>	   
+</head>
+
+<body>
+
+<div id="element" class="introLoading"></div>
+<div style="position:fixed;width:100%">
+				<div class="header-bvp">
+ <div class="left-header-bvp">
+			 
+				<a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+<span style="display:none">				
+<a href="rechercher.html"><input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:65%"  />
+
+    <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+</a></span>
+			
+			<nav id="menu">
+			
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="salons.html"><i class="fa fa-calendar" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="salon" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+								<li><a href="langue.html"><i class="fa fa-globe" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="langage" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+
+					</ul>
+			</nav>
+			</div>	
+</div>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li>
+				     
+					 
+					 <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+
+				 <a href="store.html">
+				  <li class="current-nav">
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a> 
+				  
+				 <a href="tasks.html">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				  
+				   <a href="support.html">
+					<li>
+				    <i class="fa fa-shopping-cart" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+        </div>
+
+		<!-- fin bloc menu de navigation -->	
+		
+	<div id="contenu" style="padding-top:130px">	
+				
+			 <div id='detailstore'></div>
+		 <form id="frm">
+<input id="textbot" hidden="hidden" >
+ </form>
+
+			
+			 
+			 
+			<div style="font-size:20px;color:#3166b6;">
+			     
+				 <div class="bl-plan-form" style="padding:10px;">
+				  
+				  
+				   <input type="checkbox" id="plan-habitude" onchange="javascript:habitude()" checked /> <label id='habitude'></label>
+				 
+				  <br><br>
+				  
+				  <span id="date_debut" style="display:none">
+				  <label><span id='date_deb'></span></label><br>
+				  <input type="date" id="plan-date-debut" class="input-plan-tasks"  style="width:100%;" />
+				  <br><br>
+				  </span>			
+				  <span id="datefin" style="display:none">
+				  <label><span id='date_fin'></span></label><br>
+				  <input type="date" id="plan-date-fin" class="input-plan-tasks" style="width:100%;" />
+				  <br><br>
+				  </span>
+				  <input type="checkbox" id="plan-rappel" onchange="javascript:rappeler()" /> <label id='rappel'></label>				 
+				  <br><br>
+				  <span id="heurerappel" style="display:none">
+				  <select id="heure-rappel" class="select-plan-tasks"  style="width:100%;">
+				  <option value="heure_deb" id="hrdb"></option>
+				  <option value="10_min" id="10m"></option>
+				  <option value="30_min" id="30m"></option>
+				  <option value="1_h" id="1h"></option>
+				  </select>
+				  <br><br>
+				  </span>
+				   <label><span id='heure_deb'></span></label><br>
+				  <input type="time" id="plan-heure-jour"  class="input-plan-tasks" style="width:100%;color:#3166b6" />
+				  <br><br>
+				   <label><span id='heure_fin'></span></label><br>
+				  <input type="time" id="plan-heure-fin"  class="input-plan-tasks" style="width:100%;color:#3166b6" />
+				  <br><br>
+				  
+				  <span id="frequency" style="display:none">
+				  <label ><span id='freq'></span></label><br>
+				  
+				   <select id="frequence" class="select-plan-tasks" style="width:100%;">
+				   
+				        <optgroup id="type"></optgroup>
+				   
+				   </select>
+				   <br></span>
+				  
+				  </div>
+				  
+				  
+				<div class="modal fade" id="myModalfreq" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span id='choix_jours'></span></h4>
+      </div>
+      <div class="modal-body">
+				<div class="bl-plan-semaine">
+				  
+				  <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				  
+				     <input type="checkbox" id="checkSemaine1" name="checkSemaine" /><br>
+				    <span id='lundi'></span>
+				  </div>
+				  
+				  
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine2" name="checkSemaine"/><br>
+				     <span id='mardi'></span>
+					 
+					 
+				  </div>
+				  
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine3" name="checkSemaine"/><br>
+				     <span id='mercredi'></span>
+					 
+					 
+				   </div>
+				   
+				   
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine4" name="checkSemaine" /><br>
+				     <span id='jeudi'></span>
+					 
+					 
+				   </div>
+				   
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine5" name="checkSemaine" /><br>
+				     <span id='vendredi'></span>
+					 
+					 
+				   </div>
+				   
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine6" name="checkSemaine"/><br>
+				    <span id='samedi'></span>
+					 
+				   </div>
+				   
+				   
+				   <div style="display:inline-block;width:100%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine7" name="checkSemaine"/><br>
+				 <span id='dimanche'></span>
+					 
+					 
+				   </div>
+				   
+				   
+				   </div>
+				   </div>
+      <div class="modal-footer">
+        <button type="button"onclick="javascript:personnalisetasks();"  class="btn btn-primary"><span id='valider'></span></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span id='close'></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+				  
+				  
+				  
+				  
+				 <a href="javascript:plantasks();">
+			 
+			      <div class="bottom-partage" style="float:right;width:40%;background:#ff5722;">
+			 
+		               <span id='save'></span> <i class="fa fa-chevron-right" style="color:#fff;float:right;margin-top:-20px;margin-right:20px;" aria-hidden="true"></i>
+		
+		          </div>
+			
+			     </a>
+				  
+				  
+		  </div> 
+		      
+	         	    
+			 
+		 
+	
+		
+        </div>
+
+    
+  
+     
+  
+   
+   
+   
+   
+   
+   
+       <script>
+	   
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+	   </script>
+	   
+</body>
+
+</html>

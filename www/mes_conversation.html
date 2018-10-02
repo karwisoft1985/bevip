@@ -1,0 +1,424 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <title>Bevip</title>
+        <script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+	    <script src="cordova.js"></script>
+	    <script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js_web_service/login/info_connect.js"></script>	
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="cb_style.css" />
+		<link rel="stylesheet" href="assets/css/scrollmenu.css">
+	    <script src="js_web_service/login/notification.js"></script>
+	   <script src="js_web_service/login/check_cnx.js"></script>
+	   <script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+       <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+       <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>
+	 <script>
+var db = openDatabase("bevip", "1.0", "bevip", 200000);
+     var dataset;
+     var DataType;
+ $(document).ready(function () {
+ var contenuHtml = '';	
+ var device=sessionStorage.getItem("device");
+ var dataString='device='+device;
+ $.getJSON("http://karwisoft.tn/php_bevip/support/list_conversations.php", dataString,
+        function (donnees) {
+		db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,		
+								function(tx, result) {
+								
+								dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];
+		if(donnees.files[0].filename != ''){
+		var data=donnees.files;
+		data.sort(GetSortOrder("notif"));
+		for (var i = 0; i < data.length; i++) {
+	if(donnees.files[i].image ==''){
+	var image='avatar.png';
+	}
+	else{
+	var image=donnees.files[i].image;
+	}
+	contenuHtml += '<a href="conversation.html?nom='+donnees.files[i].name+'&img='+image+'&id_dest='+donnees.files[i].id+'">';
+		if((i % 2)==0){
+	contenuHtml += '<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">';
+	}
+	else{
+	contenuHtml += '<div style="background:#dfe9e3;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">';
+	}
+	contenuHtml += ' <div style="width:60%;" >';
+	contenuHtml += '<img src="http://karwisoft.tn/php_bevip/upload/'+image+'" width="50px;" style="float:left;height:50px;"  />';
+	contenuHtml += ' <div style="padding-top:13px;padding-left:60px;">';
+	contenuHtml += ' <div style="color:#333;">'+donnees.files[i].name+'</div>';
+	if(donnees.files[i].msg=='Message vocal' && lang=='en'){
+	var msg='Vocal message...';
+	}
+	else if(donnees.files[i].msg=='Message vocal' && lang=='ar'){
+	var msg='رسالة صوتية';
+	}	
+	else if(donnees.files[i].msg=='Image' && lang=='en'){
+	var msg='Picture...';
+	}	
+	else if(donnees.files[i].msg=='Image' && lang=='ar'){
+	var msg='صورة';
+	}
+	else{
+	var msg=donnees.files[i].msg;
+	}
+	contenuHtml += '<div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">'+msg+'...</div>';
+	contenuHtml += '</div>';
+	contenuHtml += '</div>';	
+	if(donnees.files[i].notif>0){
+	contenuHtml += '<div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >';
+	contenuHtml += '<span class="badge badge-secondary" style="background:#cb1712">'+donnees.files[i].notif+'</span><br>'+donnees.files[i].date; 
+	contenuHtml += '</div>';
+	}
+	else{
+	 contenuHtml += '<div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >';
+	contenuHtml += '<i class="fa fa-check" style="font-size:10px;"></i><br>'+donnees.files[i].date;
+	contenuHtml += '</div>';
+	}
+	contenuHtml += '</div></a>';
+	}
+	}
+	else{
+	contenuHtml += '<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">';
+								if (lang=='fr'){
+								contenuHtml += 'Aucune conversation';
+								}
+								else if (lang=='ar'){
+								contenuHtml += 'لا يوجد محادثات';
+								}
+								else{
+								contenuHtml += 'No conversation';
+								}
+	contenuHtml += '</div>';
+	}
+document.getElementById("list_conversation").innerHTML = contenuHtml;
+	 });
+	 });
+	 });
+	 });
+	 //Comparer Function  
+function GetSortOrder(prop) {  
+    return function(a, b) {  
+        if (a[prop] < b[prop]) {  
+            return 1;  
+        } else if (a[prop] > b[prop]) {  
+            return -1;  
+        }  
+        return 0;  
+    }  
+}  
+function goBack() {
+    window.history.back();
+}
+
+</script>
+
+</head>
+<body  >
+<!-- debut bloc  header-bvp -->
+
+
+<div  style="position:fixed;width:100%;">
+
+<div class="header-bvp">
+
+   <div class="left-header-bvp">
+			 
+				<span onclick="goBack()" style="margin-right:20px;"><i class="fa fa-arrow-left" aria-hidden="true" style="color:#fff; font-size:20px" ></i></span>
+
+				<span style="display:none">
+               <a href="rechercher.html"><input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #ddd; color: #fff; border: none; width:65%"  />
+
+                   <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+
+			   </a></span>
+			
+			<nav id="menu">
+			
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+                    			 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+					</ul>
+					
+					
+			</nav>
+			
+   </div>	
+	
+<!--<span id="nbajout" style="float:right; margin-top:10px"></span>-->
+		
+</div>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li>
+				     <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 
+				 <a href="store.html">
+				  <li>
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a>
+				  
+				 <a href="tasks.html">
+				 
+				 <li>
+				    <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html">
+				 
+				 <li>
+				 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="support.html">
+					<li class="current-nav">
+				    <i class="fa fa-comments" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+        </div>
+
+					        <br><br><br>
+						    <div style="margin-top:52px;">
+							<div id="list_conversation"></div>
+							<!--<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							   <div style="width:60%;" >
+							         <img src="assets/img/img1.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Mohamed Mohdhi</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<span class="badge badge-secondary" style="background:#cb1712">1</span><br>
+									 Aujourd'hui 
+							   </div>
+							</div>
+							<div style="background:#dfe9e3;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:60%;" >
+							         <img src="assets/img/img2.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Sofien khlif</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<span class="badge badge-secondary" style="background:#cb1712">2</span><br>
+									 Aujourd'hui 
+							   </div>
+							</div>
+							
+							<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:60%;" >
+							         <img src="assets/img/img3.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Ichraf Sboui</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							    <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        <span class="badge badge-secondary" style="background:#cb1712">4</span><br>
+									 Hier 
+							    </div>
+							</div>
+							
+							<div style="background:#dfe9e3;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:60%;" >
+							         <img src="assets/img/img5.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Taher belil</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br>Hier 27/02/1991
+							    </div>
+							   
+							   
+							</div>
+							
+							<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:90%;" >
+							         <img src="assets/img/img6.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Wajih allani</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br> Hier 27/02/1991
+							    </div>
+							   
+							   
+							</div>
+							<div style="background:#dfe9e3;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:90%;" >
+							         <img src="assets/img/img4.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Wafa msekni</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br> Hier 27/02/1991
+							    </div>
+							   
+							   
+							</div>
+							<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:90%;" >
+							         <img src="assets/img/img1.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Mohamed Mohdhi</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br> Hier 27/02/1991
+							    </div>
+							   
+							   
+							</div>
+							<div style="background:#dfe9e3;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:90%;" >
+							         <img src="assets/img/img2.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Sofien khlif</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							    <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br> Hier 27/02/1991
+							    </div>
+							   
+							</div>
+							
+							<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:90%;" >
+							         <img src="assets/img/img3.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Ichraf Sboui</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br> Hier 20/02/1991
+							    </div>
+							  
+							   
+							</div>
+							<div style="background:#dfe9e3;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:90%;" >
+							         <img src="assets/img/img5.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Taher belil</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br> Hier 20/02/1991
+							    </div>
+							   
+							   
+							</div>
+							
+							<div style="background:#f5fbf7;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							    
+							   <div style="width:60%;" >
+							         <img src="assets/img/img6.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Wajih allani</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        
+									<i class="fa fa-check" style="font-size:10px;"></i><br> Hier 20/02/1991
+							    </div>
+							   
+							</div>
+							<div style="background:#dfe9e3;display:block;height:52px;width:100%;border-bottom:1px solid #ddd;">
+							   <div style="width:60%;" >
+							         <img src="assets/img/img4.jpg" width="50px;" style="float:left;height:50px;"  />
+									 <div style="padding-top:13px;padding-left:60px;">
+							         <div style="color:#333;">Wafa msekni</div>
+									 <div style="font-size:15px;text-transform:lowecase;color:#000;margin-top:-5px;font-weight:bold;">Message Message ...</div>
+									 </div>
+							   </div>
+							   <div style="width:25%;float:right;padding:0px;margin-top:-38px;margin-left:10px;color:#333;font-size:10px;text-align:center;" >
+							        <i class="fa fa-check" style="font-size:10px;"></i><br> Hier 20/02/1991
+							    </div>
+							   
+							</div>-->
+							
+							</div>
+
+</body>
+</html>					

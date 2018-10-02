@@ -1,0 +1,342 @@
+﻿<html>
+<head>
+
+<!-- style pour le navigation scrollable  -->
+    <link rel="stylesheet" href="assets/css/scrollmenu.css">
+	
+	
+   <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+   <meta name="format-detection" content="telephone=no">
+   
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		
+		<title>Bevip</title>
+		
+		
+		<script src="assets/js/jquery.min.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js_web_service/login/info_connect.js"></script>
+		<script src="js_web_service/gestion_statistique/statistics.js"></script>
+
+		<script src="js_web_service/gestion_statistique/statistiques.js"></script>
+		<script src="assets/js/fusioncharts.js"></script>
+		<script type="text/javascript" src="assets/js/themes/fusioncharts.theme.ocean.js"></script>
+        <script src="assets/js/fusioncharts.charts.js"></script>
+		<script src="assets/js/jquery-2.1.4.js"></script>
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+				<link href="assets/css/responsive-calendar.css" rel="stylesheet">
+		<script type="text/javascript" src="assets/js/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		
+		
+		<link href="dist/css/introLoader.css" rel="stylesheet">
+        <script src="dist/helpers/jquery.easing.1.3.js"></script>
+        <script src="dist/helpers/spin.min.js"></script>
+        <script src="dist/jquery.introLoader.js"></script>
+	<link rel="stylesheet" type="text/css" href="assets/css/pignose.calendar.css" />
+	<style type="text/css">
+		.input-calendar {
+			display: block;
+			width: 100%;
+			max-width: 360px;
+			margin: 0 auto;
+			height: 3.2em;
+			line-height: 3.2em;
+			font: inherit;
+			padding: 0 1.2em;
+			border: 1px solid #d8d8d8;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+			-o-box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+			-moz-box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+			-webkit-box-shadow: 0 4px 12px rgba(0, 0, 0, .25);
+		}
+
+		.btn-calendar {
+			display: block;
+			width: 90%;
+			max-width: 360px;
+			background-color: #0099cc;
+			margin: 0 auto;
+			font-weight: 600;
+			color: #ffffff !important;
+			text-decoration: none !important;
+		}
+
+	</style>
+	<script type="text/javascript" src="assets/js/moment.min.js"></script>
+	<script type="text/javascript" src="assets/js/pignose.calendar.js"></script>
+	<script type="text/javascript">
+	//<![CDATA[
+	$(function() {
+	var today = new Date();
+ var d=today.getDate();
+ if(d<10)
+ {
+ d='0'+d;
+ }
+ var m=today.getMonth()+1;
+  if(m<10)
+ {
+ m='0'+m;
+ }
+ var a=today.getFullYear();
+ var jour=a+'-'+m+'-'+d;
+			// Calendar modal
+		var minDate = moment().set('dates', Math.min(moment().day(), d-30)).format('YYYY-MM-DD');
+		var maxDate = moment().set('dates', Math.max(moment().day(), d)).format('YYYY-MM-DD');
+		var $btn = $('.btn-calendar').pignoseCalendar({
+			modal: true, // It means modal will be showed when you click the target button.
+			buttons: true,
+			minDate: minDate,
+			maxDate: maxDate,
+			apply: function(date) {
+			window.location.href = 'statistique.html?date='+date;
+
+			}
+		});
+
+	});
+	//]]>
+	</script>
+
+	   
+<script src="js_web_service/login/notification.js"></script>
+		
+		<script>
+		
+      function sharePhoto() {
+	   
+	 
+            var imageLink;
+            console.log('Calling from CapturePhoto');
+            navigator.screenshot.save(function(error,res){
+            if(error){
+            console.error(error);
+            }else{
+            console.log('ok',res.filePath); //should be path/to/myScreenshot.jpg
+            //For android
+            imageLink = res.filePath;
+            window.plugins.socialsharing.share(null, null,'file://'+imageLink, 'http://karwisoft.tn/template-bevip/');
+
+           //For iOS
+           //window.plugins.socialsharing.share(null,   null,imageLink, null)
+     }
+     },'jpg',50,'myScreenShot');
+    }
+    </script>	
+		
+		
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+			
+		</script>
+		
+	<script src="js_web_service/main/notif_msg.js"></script>
+	<script src="js_web_service/gestion_taches/update_habitude.js"></script>
+	 		<script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+      <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+      <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>  
+
+</head>
+<body>
+<div id="element" class="introLoading"></div>
+<div style="position:fixed;width:100%">
+				<div class="header-bvp">
+ <div class="left-header-bvp">
+			 
+				<a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+<span style="display:none">				
+<a href="rechercher.html"><input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:65%"  />
+
+    <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+</a></span>
+			
+			<nav id="menu">
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="salons.html"><i class="fa fa-calendar" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="salon" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+								 <li><a href="langue.html"><i class="fa fa-globe" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="langage" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+				  </ul>
+			</nav>
+			</div>	
+<!--<span id="nbajout" style="float:right; margin-top:10px"></span>-->		
+</div>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li>
+					 <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>				 
+				 
+				  <a href="store.html">
+				  <li>
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a> 
+				 
+				 <a href="tasks.html">				 
+				 <li>
+				      <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html">
+				 
+				 <li class="current-nav" >
+				     
+					 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="support.html">
+					<li>
+				    <i class="fa fa-shopping-cart" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+        </div>
+
+		<!-- fin bloc menu de navigation -->	
+		
+	<div id="contenu" style="padding-top:130px">				
+
+		<div id="modal" class="article">
+		<div class="bottom-partage">
+            <a href="#" class="btn-calendar">  <i class="fa fa-calendar" aria-hidden="true" style="color:#fff;font-family:14px;"></i><span id='calendar'></span></a>
+			<div class="box"></div>
+		</div>
+		</div>
+ 	
+<div class="bl-stat" style="text-align:center;" id="chart-container-categorie"></div>	
+
+</div>
+
+
+
+ <!-- Modal 2 -->
+ 
+  <div class="modal fade" id="myModalShareStat" artabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  
+  
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+	  
+        
+       <!-- type bloc share - START -->
+		<div class="bl-share-stat-facebook" onclick="sharePhoto();">
+		     
+			 FACEBOOK
+			 
+		</div>
+		
+		<div class="bl-share-stat-twitter" >
+		  
+		  
+		   TWITTER
+		
+		</div>
+		
+		
+		<div class="bl-share-stat-linkedin" >
+		
+		    LINKEDIN
+		
+		</div>
+		
+		<div class="bl-share-stat-viadeo" >
+		
+		    VIADEO
+		
+		</div>
+		
+		
+		<div class="bl-share-stat-goolge" >
+		
+		   GOOGLE+
+		
+		
+		</div>
+    	
+	  
+       <!-- type bloc share - END -->
+     
+	 </div>
+      
+    </div>
+	
+ </div>
+ </div>
+ 
+  <!-- end Modal  -->
+  
+  
+  <script>
+	   
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+  </script>
+	
+
+</body>
+</html>

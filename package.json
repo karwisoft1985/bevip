@@ -1,0 +1,37 @@
+{
+  "name": "com.karwisoft.bevip2016",
+  "version": "0.0.1",
+  "displayName": "bevip",
+  "cordova": {
+    "platforms": [
+      "android"
+    ],
+    "plugins": {
+      "cordova-plugin-whitelist": {},
+      "org.apache.cordova.plugin.cache": {},
+      "cordova-plugin-keyboard": {},
+      "cordova-plugin-audio-recorder-api": {},
+      "cordova-plugin-file-opener2": {},
+      "com-badrit-macaddress": {},
+      "cordova-plugin-nativeaudio": {},
+      "cordova-plugin-calendar": {},
+      "cordova-android-support-gradle-release": {
+        "ANDROID_SUPPORT_VERSION": "27.+"
+      }
+    }
+  },
+  "dependencies": {
+    "android-versions": "^1.3.0",
+    "com-badrit-macaddress": "https://github.com/mohamed-salah/MacAddress.git",
+    "cordova-android": "^6.3.0",
+    "cordova-android-support-gradle-release": "^1.4.4",
+    "cordova-plugin-audio-recorder-api": "~0.0.1",
+    "cordova-plugin-calendar": "^5.0.0",
+    "cordova-plugin-compat": "^1.2.0",
+    "cordova-plugin-file-opener2": "~2.0.19",
+    "cordova-plugin-keyboard": "~1.2.0",
+    "cordova-plugin-nativeaudio": "~3.0.9",
+    "cordova-plugin-whitelist": "1",
+    "org.apache.cordova.plugin.cache": "https://github.com/tiltshiftfocus/cordova-plugin-cache.git"
+  }
+}

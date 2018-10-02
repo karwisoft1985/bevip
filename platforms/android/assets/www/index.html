@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html>
+
+
+    <head>
+	
+       <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+		  <title>Bevip</title>
+        <script src="assets/js/jquery.min.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+	
+		
+		<script src="js_web_service/gestion_taches/sqlite.js"></script>
+		
+		
+		<script src="js_web_service/login/authentification.js"></script>
+<script>
+document.addEventListener('deviceready', onDeviceReady.bind(this), false);
+function onDeviceReady() {	
+		
+var date = new Date();
+var j=date.getDate();
+if(j<10){
+j='0'+j;
+}
+var m=date.getMonth()+1;
+if(m<10){
+m='0'+m;
+}
+var y=date.getFullYear();
+date=y+'-'+m+'-'+j;
+db.transaction(function(tx) {
+tx.executeSql("SELECT id_tache,heure,titre,date,rappel,heurerap FROM tache where date = '" + date+"'", [] ,
+
+								function(tx, result) { 								
+				
+                var sound = device.platform == 'Android' ? 'file://0564.wav' : 'file://beep.caf';
+									dataset = result.rows;	
+									if (dataset.length > 0){
+									
+db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, resultl) {
+
+                                datasetl = resultl.rows;
+								
+								iteml = datasetl.item(0);
+								
+								var lang = iteml['lang']; 
+								
+									for ( var i = 0, item = null; i < dataset.length; i++) {
+										item = dataset.item(i);
+										var id_tache = item['id_tache'];
+										var titre = item['titre'];
+										var datedeb = item['date'];
+										var heure = item['heure'];
+										var rappel = item['rappel'];
+										var heurerap = item['heurerap'];
+										if(rappel==1){
+										if(lang=="fr"){
+										if(titre=='Read regularly'){
+					                     titre ='Lire régulièrement';}	 
+										 else if(titre=='Take healthy food'){
+					                      titre ='Prenez des aliments sains';}										
+										else if(titre=='Economize'){
+					                     titre ='Economiser';}
+										 else if(titre=='Do sports'){
+					                     titre ='Faire du sport';}
+										 else if(titre=='Attend conferences'){
+					                     titre ='Assister à des conférences';}
+										 else if(titre=='Work hard'){
+										titre ='Travailler dur';}
+										 else if(titre=='Study'){
+					                     titre ='Etudier';}
+										 else if(titre=='Learn a language'){
+					                     titre ='Apprendre une langue';}
+										 else if(titre=='Spend time with family'){
+					                     titre ='Passer du temps en famille';}
+										 else if(titre=='Making weekends with family'){
+					                    titre ='Faire des week-ends en famille';}
+										 else if(titre=='lend touches'){
+					                     titre ='Prêter de petites attentions';}
+										 else if(titre=='See my friends'){
+					                     titre ='Voir mes amis';}
+										 else if(titre=='volunteering'){
+					                     titre ='Faire du bénévolat';}
+										 else if(titre=='give an association'){
+					                     titre ='Donner à une association';}
+										 else {
+										titre =titre;
+											}
+										}
+										else if (lang == 'ar'){
+										if(titre=='Read regularly'){
+					                    titre ='أقرأ بانتظام';}	 
+										 else if(titre=='Take healthy food'){
+					                     titre ='تناول طعام صحي';}										
+										else if(titre=='Economize'){
+					                     titre ='اقتصد';}
+										 else if(titre=='Do sports'){
+					                     titre ='ممارسة الرياضة';}
+										 else if(titre=='Attend conferences'){
+					                     titre ='حضور مؤتمرات';}
+										 else if(titre=='Work hard'){
+					                     titre ='عمل بجد';}
+										 else if(titre=='Study'){
+					                     titre ='دراسة';}
+										 else if(titre=='Learn a language'){
+					                     titre ='تعلم لغة';}
+										 else if(titre=='Spend time with family'){
+					                     titre ='قضاء وقت مع العائلة';}
+										 else if(titre=='Making weekends with family'){
+					                     titre ='جعل عطلة نهاية الأسبوع مع العائلة';}
+										 else if(titre=='lend touches'){
+					                     titre ='تقديم لمسات';}
+										 else if(titre=='See my friends'){
+					                     titre ='رؤية أصدقائي';}
+										 else if(titre=='volunteering'){
+					                     titre ='تطوع';}
+										 else if(titre=='give an association'){
+					                     titre ='منح لجمعية';} 
+										  else {
+										titre =titre;
+											}
+										} 
+										 else {
+										titre =titre;
+											}		
+										
+										
+var tomorrowt = new Date();
+var day=datedeb.substring(8, 10);
+tomorrowt.setDate(day);	
+ var hour=heure.substring(0, 2);
+ var min=heure.substring(3, 5);
+tomorrowt.setHours(hour);
+tomorrowt.setMinutes(min);
+tomorrowt.setSeconds(00);
+if(heurerap=='heure_deb'){
+var heure_deb=tomorrowt;}
+else{
+var y=tomorrowt.getFullYear();		
+var mm=tomorrowt.getMonth();	
+var d=tomorrowt.getDate();	
+var h=tomorrowt.getHours();	
+var m=tomorrowt.getMinutes();	
+var tomorrowtold = new Date(y, mm, d, h, m, 0, 0);
+if(heurerap=='10_min'){
+var heure_deb = new Date(tomorrowtold - 10*60*1000);}
+else if(heurerap=='30_min'){
+var heure_deb = new Date(tomorrowtold - 30*60*1000);}
+else if(heurerap=='1_h'){
+var heure_deb = new Date(tomorrowtold - 1*60*60*1000);}
+}			
+		
+				cordova.plugins.notification.local.schedule({					
+                id: id_tache,
+				title: titre,  
+				message:heure,
+                //sound: sound,				
+				at: heure_deb
+            });	
+	cordova.plugins.notification.local.on("click", function(notification) {
+	window.location.href = 'tasks.html';
+});	
+
+	
+}									
+}
+
+});
+});
+											
+var today = new Date();
+var tomorrow = new Date();
+ tomorrow.setDate(today.getDate()+1);						
+tomorrow.setHours(22);
+tomorrow.setMinutes(00);
+tomorrow.setSeconds(00);
+var tomorrow_at_6_am = new Date(tomorrow);
+
+								  cordova.plugins.notification.local.schedule({
+					
+                id: 1,
+				title: "Follow your projects",
+                message: "Please check the completed tasks",   
+                //sound: sound,
+				firstAt: tomorrow_at_6_am
+            });	
+	cordova.plugins.notification.local.on("click", function(notification) {
+	window.location.href = 'evaluation.html';
+});	
+										
+}
+else{
+
+						  cordova.plugins.notification.local.schedule({
+						
+                id: 1,
+                title: "Reminder",
+                message: "A goal without a plan is just a wish",  
+                //sound: sound,
+				firstAt: tomorrow_at_6_am
+            });	
+
+	cordova.plugins.notification.local.on("click", function(notification) {
+	window.location.href = 'store.html';
+	playbot();
+});
+
+}
+});
+});
+}
+ function playbot() {
+   var u = new SpeechSynthesisUtterance();
+        var txt = "A good plan implemented today is better than a perfect plan implemented tomorrow";
+        u.text = txt;
+        u.lang = 'en-US';
+        speechSynthesis.speak(u);   
+      }
+</script>
+		
+		
+		
+    </head>
+   
+    <body class="body">
+
+		<div id="msg-err-cnx">
+        <div class="cont-splash" id="cont-splash">
+		       
+			  
+		</div>
+		</div>
+
+    
+		
+	</body>
+	
+</html>

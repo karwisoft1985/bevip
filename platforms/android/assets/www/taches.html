@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html>
+
+ <head>
+   <!-- style pour le navigation scrollable  -->
+    <link rel="stylesheet" href="assets/css/scrollmenu.css">
+ 
+ 
+  <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <title>Bevip</title>
+        
+        <!-- debut appel fichies css et js -->
+  
+        <script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js_web_service/gestion_taches/taches.js"></script>
+		<script src="js_web_service/gestion_statistique/statistiques.js"></script>
+		<script src="js_web_service/login/info_connect.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		
+		<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+		<link rel="stylesheet" href="assets/css/pageslider.css">
+		<link rel="stylesheet" href="assets/js/pageslider.js">
+		<link rel="stylesheet" href="assets/js/fastclick.js">
+		<link href="assets/css/responsive-calendar.css" rel="stylesheet">
+		
+		
+		
+		<link href="dist/css/introLoader.css" rel="stylesheet">
+        <script src="dist/helpers/jquery.easing.1.3.js"></script>
+        <script src="dist/helpers/spin.min.js"></script>
+        <script src="dist/jquery.introLoader.js"></script>
+		
+			<script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+      <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+      <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>
+		<script src="js_web_service/main/notif_msg.js"></script>
+		
+				<style>
+.dropbtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 16px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e8e41;
+}
+		</style>
+	<!-- fin appel fichies css et js -->
+	
+	<!-- debut appel plugin jquery sidebar -->
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+			
+		</script>
+		<!-- debut appel plugin jquery hide modal -->
+		
+		<script type="text/javascript">
+		
+		$(document).ready(function(){
+		
+	      $('.hide-modal').click(function(){
+		  
+		       $('#myModal').modal('hide');
+			   
+	      }); 
+		 
+		
+        });
+		
+        </script>
+		
+		<!-- fin appel plugin jquery hide modal -->
+	   
+	   <!-- fin appel fichier sqlite pour la création de la base de données local  -->
+	   
+	   
+	    <!-- debut appel script statistique courant -->
+	   
+	   
+	   <!-- fin appel script statistique courant -->
+	   
+	   <!-- debut appel script responsive calendar -->
+	   
+	   <script src="assets/js/responsive-calendar.js"></script>
+	   
+	   <script type="text/javascript">
+	    var db = openDatabase("bevip", "1.0", "bevip", 200000);
+           var dataset;
+           var DataType;
+		   
+	  	  $(document).ready(function (){
+	var str='';
+	var info='';
+	var nbre=0;
+	var num=0;
+	var day='';
+	dt='';
+	    var y = d.getFullYear();
+	    var m = d.getMonth()+1;
+		if(m<10){
+		m='0'+m;
+		}
+		var date = y+'-'+m;
+		
+		db.transaction(function(tx) {
+        
+		tx.executeSql("select * from tache where frequence !='habitude'", [] ,
+
+								function(tx, result) { 								
+				
+							     dataset = result.rows;	
+								 var glob=dataset.length ;
+
+								 if (dataset.length > 0){
+									
+                                   for ( var l = 0, item = null; l < dataset.length; l++) {
+									      
+										  item = dataset.item(l);
+										  dt = item['date'];
+									      db.transaction(makeTx(dt));
+				 
+		                           }
+		   
+		      function makeTx(val) {
+          
+     		  return function(tx){
+		
+               tx.executeSql("SELECT * FROM tache WHERE date='" + val +"' and frequence !='habitude'", [], function(tx, results) {
+			
+                if(results.rows.length > 0) {
+                   				dataset = results.rows;									
+										var number=dataset.length;
+										
+										
+										
+										mois =val.substring(5, 7);
+										annee =val.substring(0, 4);
+										 dte = annee+'-'+mois;
+										nbre++;
+									num =dataset.length;
+									 day =val;
+									 if(nbre==1)
+									 { 
+									
+								       str += '"'+val+'":{"number":' +number+', "url": "taches.html?date='+val+'"}';
+									
+									 }
+									else
+									 {
+									
+								       str += ',"'+val+'":{"number":' +number+', "url": "taches.html?date='+val+'"}';
+									
+									 }
+								   if(nbre==glob)
+									{ 
+									  info +=str;
+									  dates= "{"+info+"}"; 
+								      $(".responsive-calendar").responsiveCalendar({		
+
+								   
+                                   time: date,
+		                           events: JSON.parse(dates)  
+		
+			  
+                          });}
+                             }
+                         });
+                         };
+                         }
+		   
+		   
+		   
+                      }else {
+	
+	                       $(".responsive-calendar").responsiveCalendar({			 
+                           time: date,});
+		   
+                     }
+		   
+		            });
+	   
+	   
+	               });
+
+	               });
+	  </script>
+<script src="js_web_service/login/notification.js"></script>
+	 <!-- fin appel script responsive calendar -->
+
+</head>
+
+<body>
+
+<div id="element" class="introLoading"></div>
+<div style="position:fixed;width:100%">
+				<div class="header-bvp">
+ <div class="left-header-bvp">
+			 
+				<a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+<span style="display:none">				
+<a href="rechercher.html"><input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:65%"  />
+
+    <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+</a></span>
+			
+			<nav id="menu">
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+                    			<li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								<li><a href="salons.html"><i class="fa fa-calendar" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="salon" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+								<li><a href="langue.html"><i class="fa fa-globe" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="langage" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+					</ul>
+			</nav>
+			</div>	
+<!--<span id="nbajout" style="float:right; margin-top:10px"></span>	-->	
+</div>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li>
+				  <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				  <a href="store.html">
+				  <li >
+				     <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a> 
+				 <a href="tasks.html">
+				 
+				 <li class="current-nav">
+				   <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html">
+				 
+				 <li>
+				    <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="support.html">
+					<li>
+				    <i class="fa fa-comments" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+        </div>
+
+		<!-- fin bloc menu de navigation -->	
+		
+	<div id="contenu" style="padding-top:130px">	
+				
+		<a  data-toggle="modal" data-target="#myModalCalendar">
+		
+		    <div class="bottom-partage">
+		      
+			      <i class="fa fa-calendar" aria-hidden="true" style="color:#fff;font-family:14px;"></i> 	<span id='calendar'></span>
+
+		
+		    </div>
+			
+		</a>
+		<!-- debut catégorie projets bvp -->	
+		<div class="categorie-bvp">
+		     
+			 
+			 <a href="javascript:changertache('Personnel');">
+		     <div class="item-categorie-bvp">
+			 
+			       <img src="assets/img/perso.png" class="img-cat-tasks-bvp"  /><br>
+			     					<span id='personnel'></span>
+
+				   
+				   
+			 </div>
+			 </a>
+			 
+			 <a href="javascript:changertache('Familiale');">
+			 <div class="item-categorie-bvp">
+			 
+			    <img src="assets/img/fam.png" class="img-cat-tasks-bvp"   /><br>
+			   				<span id='familial'></span>
+
+			 
+			 
+			 </div>
+			 </a>
+			 
+			 <a href="javascript:changertache('Professionnel');">
+			 <div class="item-categorie-bvp">
+			     
+				 <img src="assets/img/pro.png" class="img-cat-tasks-bvp"   /><br>
+			   						     <span id='professionnel'></span>
+
+			 
+			 </div>
+			 </a>
+			 
+			 <a href="javascript:changertache('Sociale');">
+		     <div class="item-categorie-bvp" style="border-right: none;">
+			    
+				 <img src="assets/img/soc.png" class="img-cat-tasks-bvp"   /><br>
+						    <span id='social'></span>
+
+			 
+			 </div>
+			 </a>
+		
+		
+		</div>
+		<!-- fin catégorie projets bvp -->
+		
+		
+		<!-- debut liste taches bvp -->
+		<div id="listtache"></div>
+		<!-- fin liste taches bvp -->
+     
+
+    <!-- Modal 1 -->
+   
+    <div class="modal fade" id="myModal" artabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  
+     <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" class="modal_button">&times;</span><span class="sr-only"><span id='close'></span></button>
+
+            <h3 class="modal-title"><span id='add_task'></h3>
+        </div>
+	
+        <div class="modal-body">
+		
+          <input type="text" placeholder="Task Name" class="form-control " style="width:90%;margin:15px;padding:20px;height:60px;border:1px solid #0099cc;text-transform:uppercase;font-weight:bold;" name="titre" id="titre" />
+        </div>
+		
+        <div class="modal-body">
+		
+            <select  name="categorie" id="categorie" class="form-control " style="width:90%;margin:15px;padding:20px;height:60px;border:1px solid #0099cc;text-transform:uppercase;font-weight:bold;">
+		
+              <option value=""  disabled selected><span id='task_type'></span></option>
+             <option value="Personnel"><span id='personnel'></span></option>
+             <option value="Familiale" ><span id='familial'></span></option>
+             <option value="Professionnel"><span id='professionnel'></span></option>
+             <option value="Sociale"><span id='social'></span></option>
+		 
+           </select><br>
+		   
+        </div>
+		
+        <div class="modal-footer">
+		
+          <button type="button" class="btn btn-lg hide-modal" style="color:#fff" data-toggle="modal" data-target="#myModal1" ><span id='next'></span></button>
+        
+		</div>
+		
+      </div>
+      
+    </div>
+	
+	
+  </div>
+  
+     
+  <!-- Modal 2 -->
+  <div class="modal fade" id="myModal1" artabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  
+  
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+	  
+        <div class="modal-header">
+           <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" class="modal_button">&times;</span><span class="sr-only"><span id='close'></span></span></button>
+          <h3 class="modal-title"><span id='add_task'></span></h3>
+        </div>
+		
+        <div class="modal-body">
+          <input type="date" placeholder="date" class="form-control " style="width:90%;color:#000;margin:15px;padding:20px;height:60px;border:1px solid #0099cc;text-transform:uppercase;font-weight:bold;" name="date" id="date" >	
+        </div>
+			
+          <div class="modal-body">
+            <input type="time"  class="form-control " style="width:90%;color:#000;margin:15px;padding:20px;height:60px;border:1px solid #0099cc;text-transform:uppercase;font-weight:bold;" name="heure" id="heure" />
+          </div>
+	
+		
+		
+		
+		
+        <div class="modal-footer">
+          <button type="button" class="btn btn-lg"  style="color:#fff" onclick="javascript:ajout_tache();"><span id='save'></span></button>
+        </div>
+      </div>
+      
+    </div>
+	
+   </div>
+   
+   
+   
+   <!-- Modal 2 -->
+  <div class="modal fade" id="myModalCalendar" artabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  
+  
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+	  
+        
+				<!-- Responsive calendar - START -->
+		
+    	<div class="responsive-calendar" style="padding:5px;">
+		
+		
+           <div class="controls">
+                          <a class="pull-left" data-go="prev"><div class="btn btn-primary" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-size:18px;background:#0099cc;"><span id='prev'></span></div></a>
+               <h4><span data-head-year></span> <span data-head-month></span></h4>
+               <a class="pull-right" data-go="next"><div class="btn btn-primary" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-size:18px;background:#0099cc;"><span id='suivant'></span></div></a>
+           </div><hr/>
+		   
+           <div class="day-headers">
+		   
+		   
+              <div class="day header"><span id='mon'></span></div>
+              <div class="day header"><span id='tue'></span></div>
+              <div class="day header"><span id='wed'></span></div>
+              <div class="day header"><span id='thu'></span></div>
+              <div class="day header"><span id='fri'></span></div>
+              <div class="day header"><span id='sat'></span></div>
+              <div class="day header"><span id='sun'></span></div>
+			  
+			  
+           </div>
+		   
+        <div class="days" data-group="days">
+          
+        </div>
+		
+        </div>
+	  
+      <!-- Responsive calendar - END -->
+        
+	
+		
+		
+		
+		
+        
+      </div>
+      
+    </div>
+	
+   </div>
+   </div>
+   
+   
+       <script>
+	   
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+	   </script>
+	  
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+{
+  "prepare_queue": {
+    "installed": [],
+    "uninstalled": []
+  },
+  "config_munge": {
+    "files": {}
+  },
+  "installed_plugins": {
+    "at.oneminutedistraction.phonenumber": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "com-badrit-macaddress": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "com.darktalker.cordova.screenshot": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-audio-recorder-api": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-autostart": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-camera": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-contacts": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-file-opener2": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-file-transfer": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-globalization": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-keyboard": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-media": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-media-capture": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-native-transitions": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-nativeaudio": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-network-information": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-sim": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-speechrecognizer": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-splashscreen": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-tts": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-vibration": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-whitelist": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-x-socialsharing": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "de.appplant.cordova.plugin.local-notification": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "nl.bobbijvoet.screenshot-plugin": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "org.apache.cordova.plugin.cache": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "org.apache.cordova.speech.speechrecognition": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "org.apache.cordova.speech.speechsynthesis": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "phonegap-plugin-push": {
+      "SENDER_ID": "133712518297",
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-calendar": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-android-support-gradle-release": {
+      "ANDROID_SUPPORT_VERSION": "27.+",
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    }
+  },
+  "dependent_plugins": {
+    "cordova-plugin-app-event": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-device": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    },
+    "cordova-plugin-file": {
+      "PACKAGE_NAME": "com.karwisoft.bevip2016"
+    }
+  }
+}

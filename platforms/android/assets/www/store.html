@@ -1,0 +1,491 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+ <head>
+ 
+ <!-- style pour le navigation scrollable  -->
+    <link rel="stylesheet" href="assets/css/scrollmenu.css">
+	
+  <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <title>Bevip</title>
+        
+        <!-- debut appel fichies css et js -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js_web_service/gestion_taches/gestion_tache.js"></script>
+		<script src="js_web_service/login/info_connect.js"></script>
+	    <script src="js_web_service/gestion_statistique/statistiques.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+	    <script src="js_web_service/login/notification.js"></script>
+	    <script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+        <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+        <script type='text/javascript' src='assets/js/langue.json'></script>
+        <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>
+		<script src="js_web_service/gestion_taches/update_habitude.js"></script>
+				<script src="js_web_service/main/notif_msg.js"></script>
+			
+	 <script type="text/javascript">
+	  var db = openDatabase("bevip", "1.0", "bevip", 200000);
+                   var dataset;
+                   var DataType;
+	 $(document).ready(function(){
+ var contenuHtml1='';
+ var contenuHtml2='';
+ var contenuHtml3='';
+ var contenuHtml4='';
+ db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, result) {
+
+                                dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];    								
+			if(lang=="fr"){
+contenuHtml1 += 'Quels que soient les aléas de la vie, la famille doit toujours rester un point d’ancrage et de ressource. Projeter des activités familiales ne fera que renforcer les liens qui vous habitent.';
+contenuHtml2 += 'Le soutien de projets sociaux est une véritable affaire de cœur. Aidez les personnes défavorisées et soutenez des projets qui permettent de promouvoir des évolutions sociales et médicales...';
+contenuHtml3 += 'Il est parfois difficile de partager notre temps de façon satisfaisante entre les différentes sphères d’activités qui occupent nos vies. Se garder du temps pour soi constitue parfois un véritable défi...';
+contenuHtml4 += 'Bien gérer son temps de travail permet de gagner en efficacité et en productivité. Il faudra veiller à ne pas se laisser submerger par la pression et les contraintes de temps.';
+					}
+			else if (lang == 'ar'){
+contenuHtml1 += 'مهما كانت مشاغل الحياة، يجب أن تبقى الأسرة دائما هي الأهم. لذلك إن إبراز الأنشطة العائلية سيؤدي دائما إلى تعزيز الروابط التي تسكنك';	
+contenuHtml2 += 'دعم المشاريع الاجتماعية هي قضية حقيقية لمساعدة الأشخاص المحرومين ودعم المشاريع التي تعزز التطورات الاجتماعية والطبية';	
+contenuHtml3 += 'مع سرعة وتيرة الحياة العصرية يصعب أحيانا تقاسم وقتنا وطاقاتنا بصورة مرضية بين مختلف المجالات التي تشغل حياتنا فالحفاظ على الوقت لنفسك يشكل تحديا في بعض الأحيان';		
+contenuHtml4 += 'إن إدارة وقت العمل الخاص بك تزيد من الكفاءة والإنتاجية لذلك يجب الحرص على التغلب على الضغوط والقيود و المحاولة دائما بذل قصارى جهدك لإكمال عملك';		
+					}
+			else {
+contenuHtml1 += 'Whatever the hazards of life, the family must always remain an anchor and resource. Projecting family activities will only strengthen the bonds that inhabit you.';
+contenuHtml2 += 'Supporting social projects is a real affair of the heart. Help disadvantaged people and support projects that promote social and medical developments ...';
+contenuHtml3 += 'It is sometimes difficult to share our time and energies, satisfactorily, between the different spheres of activity that occupy our lives. Keeping time for yourself is sometimes a challenge ...';
+contenuHtml4 += 'Managing your work time effectively increases efficiency and productivity. Care must be taken not to be overwhelmed by pressure and time or resource constraints.';
+					}
+ document.getElementById("msg_fam").innerHTML = contenuHtml1;
+ document.getElementById("msg_soc").innerHTML = contenuHtml2;
+ document.getElementById("msg_pers").innerHTML = contenuHtml3;
+ document.getElementById("msg_pro").innerHTML = contenuHtml4;
+	  });
+	  });
+	  });
+	  </script>
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+			
+		</script>
+		
+		<script type="text/javascript">
+		
+		
+		
+		var db = openDatabase("bevip", "1.0", "bevip", 200000);
+                   var dataset;
+                   var DataType;
+	    
+		$(document).ready(function(){
+        db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		function(tx,result){
+
+            dataset = result.rows;
+			item = dataset.item(0);
+			var lang = item['lang']; 
+				
+			if(lang=="fr"){
+		     var div="Veuillez sélectionner votre catégorie de projet";
+		     $("#message").html(div);
+		     play_bot(div);
+		    }
+			else if(lang == 'ar'){
+			 var div="Veuillez sélectionner votre catégorie de projet";
+		     $("#message").html(div);
+		     play_bot(div);
+			}
+			else {
+			 var div="Veuillez sélectionner votre catégorie de projet";
+		     $("#message").html(div);
+		     play_bot(div);
+			}
+		  
+		  });
+		
+		});
+		
+		});
+		
+		
+		function play_bot(conseilds) {
+	    db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+		function(tx, result) {
+        dataset = result.rows;
+		item = dataset.item(0);
+		var lang = item['lang'];
+	    if (lang == 'ar'){
+				if(conseilds=='يرجى تحديد فئة المشروع الخاص بك'){
+		        var media = new Media("/android_asset/www/assets/read.mp3", null, function (e) {
+                });
+	        }
+	
+	
+	       media.play();
+		}
+		else if (lang == 'fr'){
+				if(conseilds=='Veuillez sélectionner votre catégorie de projet'){
+		        var media = new Media("/android_asset/www/assets/read.mp3", null, function (e) {
+                });
+	        }
+	
+	
+	       media.play();
+		}
+		else if (lang == 'en'){
+				if(conseilds=='Please select your project category'){
+		        var media = new Media("/android_asset/www/assets/read.mp3", null, function (e) {
+                });
+	        }
+	
+	
+	       media.play();
+		}
+		else{
+        var u = new SpeechSynthesisUtterance();
+        var x = document.getElementById("frm");
+        var txt = "";
+        txt = x.elements[0].value
+        u.text = txt;
+		if(lang=="fr"){
+		u.lang = 'fr-FR';
+		}
+		else {
+		u.lang = 'en-US';
+		} 
+        speechSynthesis.speak(u);   
+		}
+        });
+        });
+	    }
+		
+	 
+	</script>
+		
+		
+		
+    <script type="text/javascript">
+	
+	  $(document).ready(function(){
+      // put all your jQuery goodness in here.
+        $('#talkform').submit(function(e) {
+          e.preventDefault();
+          var user = $('#say').val(); 
+          $('.usersay').text(user);
+		  document.getElementById("text").value = user; 
+          var formdata = $("#talkform").serialize();
+          $('#say').val('');
+          $('#say').focus();
+          $.get('http://karwisoft.tn/php_bevip/chatbot/conversation_start.php', formdata, function(data){
+            var b = data.botsay;
+            if (b.indexOf('[img]') >= 0) {
+              b = showImg(b);
+            }
+            if (b.indexOf('[link') >= 0) {
+              b = makeLink(b);
+            }
+            var usersay = data.usersay;
+            if (user != usersay) {
+              $('.usersay').text(usersay);
+            }
+            $('.bottom_send_group_textarea').html(b);
+			 document.getElementById("textbot").value = b; 
+			 		  playbot();
+
+          }, 'json').fail(function(xhr, textStatus, errorThrown){
+            $('#urlwarning').html("Something went wrong! Error = " + errorThrown);
+          });
+          return false;
+        });
+      });
+	  
+      function showImg(input) {
+        var regEx = /\[img\](.*?)\[\/img\]/;
+        var repl = '<br><a href="$1" target="_blank"><img src="$1" alt="$1" width="150" /></a>';
+        var out = input.replace(regEx, repl);
+        console.log('out = ' + out);
+        return out
+      }
+	  
+      function makeLink(input) {
+        var regEx = /\[link=(.*?)\](.*?)\[\/link\]/;
+        var repl = '<a href="$1" target="_blank">$2</a>';
+        var out = input.replace(regEx, repl);
+        console.log('out = ' + out);
+        return out;
+      }
+	
+	</script>
+</head>
+
+<body>
+
+<div id="element" class="introLoading"></div>
+
+<!-- debut bloc  header-bvp -->
+<div style="position:fixed;width:100%;z-index:20">
+<div class="header-bvp">
+
+   <div class="left-header-bvp">
+			 
+			   <a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+			   
+			   <span style="display:none">
+			   
+			   <a href="rechercher.html">
+			   <input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:65%"  />
+			   </a>
+			   
+			   </span>
+			
+			<nav id="menu">
+			
+					<ul style="width:300px;">
+					
+					             <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+                    			 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="salons.html"><i class="fa fa-calendar" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="salon" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+								 <li><a href="langue.html"><i class="fa fa-globe" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="langage" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+					</ul>
+					
+			</nav>
+			
+   </div>	
+
+  <!--<span id="nbajout" style="float:right; margin-top:10px"></span>-->
+		
+</div>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li>
+				     
+					 
+					 <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 
+				 
+				  <a href="store.html">
+				  <li class="current-nav">
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a> 
+				  
+				 <a href="tasks.html">
+				 <li>
+				     
+					 
+					 <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 
+				 <a href="statistics.html" >
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				  
+				    <a href="support.html">
+					<li>
+				    <i class="fa fa-shopping-cart" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+        </div>
+
+		<!-- fin bloc menu de navigation -->	
+		
+	<div id="contenu" style="padding-top:133px;z-index:10;width:96%;">	
+	
+	        <div id="message" style="text-align:center;text-transform:uppercase;border:1px solid #ddd;padding:5px;">
+			    
+			</div>
+			
+			<a href="list-store.html?cat=Personnel">
+			
+			<div class="row" style="padding:5px;background:#8dc0d1;">		    
+		
+		     <div class="col-md-6 col-sm-6 col-xs-6"  >
+			     
+				 
+				 <img src="assets/img/cath-tasks/personel.jpg" width="100%" class="img-responsive"  />
+				 
+			 
+			 </div>
+			 
+			 <div class="col-md-6 col-sm-6 col-xs-6"  >
+			    
+				<div id='personnel' style="font-size:14px;font-weight:bold;color:#000;margin-top:4px;margin-bottom:4px;"></div>
+				<p id="msg_pers" style="font-size:12px">
+				
+				</p>
+			   
+			 </div>
+			 			
+			</div>
+			
+			</a>
+			 
+			<a href="list-store.html?cat=Familiale">
+			
+		    <div class="row" style="padding:5px;background:#fff;">			
+			
+			<div class="col-md-6 col-sm-6 col-xs-6"  >
+			     
+				 
+				 <img src="assets/img/cath-tasks/familial.jpg" width="100%" class="img-responsive"  />
+				 
+			 
+			 </div>
+			 
+			 <div class="col-md-6 col-sm-6 col-xs-6"  >
+			    
+				<div id='familial' style="font-size:14px;font-weight:bold;color:#000;margin-top:4px;margin-bottom:4px;"></div>
+				<p id="msg_fam" style="font-size:12px">
+				
+				</p>
+			   
+			 </div>
+			 
+			</div>
+			
+			</a>			
+			
+			
+			 <a href="list-store.html?cat=Professionnel">
+			 <div class="row" style="padding:5px;background:#8dc0d1;">			 
+			 
+			 
+			 <div class="col-md-6 col-sm-6 col-xs-6"  >
+			     
+				 
+				 <img src="assets/img/cath-tasks/professionel.jpg" width="100%" class="img-responsive"  />
+				 
+			 
+			 </div>
+			 
+			 <div class="col-md-6 col-sm-6 col-xs-6"  >
+			    
+				<div id='professionnel' style="font-size:16px;font-weight:bold;color:#000;margin-top:4px;margin-bottom:4px;"></div>
+				
+				<p id="msg_pro" style="font-size:12px">
+				
+				</p>
+			   
+			 </div>
+			 
+			 </div>
+			 </a>
+			 
+			  <a href="list-store.html?cat=Sociale">
+			 <div class="row" style="padding:5px;background:#fff;">			
+			 
+			    <div class="col-md-6 col-sm-6 col-xs-6"  >
+			     
+				 
+				 <img src="assets/img/cath-tasks/social.jpg" width="100%" class="img-responsive"  />
+				 
+			 
+			    </div>
+			 
+			 <div class="col-md-6 col-sm-6 col-xs-6">
+			    
+				<div id='social' style="font-size:16px;font-weight:bold;color:#000;margin-top:4px;margin-bottom:4px;"></div>
+				<p id="msg_soc" style="font-size:12px">
+				
+				</p>
+			   
+			 </div>
+			 			
+			 </div>
+			</a>
+		
+    </div>
+
+    
+  
+     
+  
+   
+   
+   
+   
+   
+   
+       <script>
+	   
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+	   </script>
+	   
+</body>
+
+</html>

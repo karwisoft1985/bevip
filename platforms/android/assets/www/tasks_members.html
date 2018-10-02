@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html>
+
+ <head>
+ <!-- style pour le navigation scrollable  -->
+    <link rel="stylesheet" href="assets/css/scrollmenu.css">
+        
+  <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <title>Bevip</title>
+        
+        <!-- debut appel fichies css et js -->
+		
+        <script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script src="js_web_service/gestion_taches/update_habitude.js"></script>
+		<script src="js_web_service/login/cnx.js"></script>
+		<script src="js_web_service/login/info_connect.js"></script>
+		<script src="js_web_service/login/modifier_photo.js"></script>
+		<script src="js_web_service/gestion_groupe/tasks.js"></script>
+			<script src="js_web_service/login/notification.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />	
+		
+	   	<script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+      <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+      <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>		   
+			 <script>
+ function placeholders() {
+var lang = navigator.language || navigator.language; 
+if(lang=="fr-FR" || lang=="fr-CA"|| lang=="fr-BE"|| lang=="fr-CH"|| lang=="fr-LU"){
+  document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "Partenaires, projets, et plus...");}
+   else if (lang == 'ar-EG' || lang == 'ar-TN'|| lang == 'ar-SA'|| lang == 'ar-DZ'|| lang == 'ar-YE'|| lang == 'ar-JO'|| lang == 'ar-KW'|| lang == 'ar-BH'|| lang == 'ar-QA'|| lang == 'ar-AE'|| lang == 'ar-LB'|| lang == 'ar-SY'|| lang == 'ar-MA'|| lang == 'ar-OM'|| lang == 'ar-IQ'|| lang == 'ar-LY'){
+	 document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "...شركاء، مشاريع، و المزيد");
+}
+					 else {
+				 document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "Partners, projects, and more..");
+        }
+  
+}
+
+$(document).ready(placeholders);
+
+	 </script> 	
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+			
+		</script>
+
+</head>
+
+<body>
+
+<div id="element" class="introLoading"></div>
+
+<!-- debut bloc  header-bvp -->
+<div style="position:fixed;width:100%">
+				<div class="header-bvp">
+ <div class="left-header-bvp">
+			 
+				<a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+				
+<a href="rechercher.html"><input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:60%"  />
+
+    <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+</a>
+			
+			<nav id="menu">
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+                    			 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+
+					</ul>
+			</nav>
+			</div>
+<span id="nbgroup" style="float:right; margin-top:10px"></span>				
+<span id="nbajout" style="float:right; margin-top:10px"></span>		
+</div>
+
+						<table  id="listpart"></table>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html" target="_blank">
+				 <li>
+				     
+					 
+					 <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 <a href="tasks.html" target="_blank">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html" target="_blank">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 
+				  <a href="store.html" target="_blank">
+				  <li>
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a> 
+				  
+				    <a href="partners.html" target="_blank">
+				 <li class="current-nav" >
+				     
+					 
+					 <i class="fa fa-users" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>
+					 
+				 
+				 </li>
+				 </a>
+   
+	     </div>
+        </div>
+
+		<!-- fin bloc menu de navigation -->	
+		
+	<div id="contenu" style="padding-top:145px">	
+<div id="err-cnx">	
+  <center style="margin-top:10px">
+<a  data-toggle="modal" data-target="#modalaj">
+  <i class="fa fa-plus-circle" aria-hidden="true" style="color:#ff5722;font-size:20px;"></i> 
+  <label id="affecter_task" style="color:#ff5722;font-size:16px;"></label>
+  </a> </center>
+ <div class="modal fade"  id="modalaj" artabindex="-1" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true">
+ <div class="modal-dialog">
+<div class="modal-content"><div class="modal-header">
+<span id="add" style="color:#fff;"></span>
+<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true" class="modal_button">&times;</span><span class="sr-only">Close</span></button>
+
+</div>
+<div class="modal-body">
+<center><label id="titre" style="color:#3166b6"></label>:<br><br>
+<input type="text" id="title" class="form-control"/><br><br>
+<center><label id="membre" style="color:#3166b6"></label>:<br><br>
+<span id="member"></span>
+</center>
+</div>
+<div class="modal-footer">
+<button id="save" class="btn" style="color:#fff;" onclick="ajout_tache();"></button>
+ </div> 
+ </div></div></div>	
+   
+     
+  
+   
+   <div id="list_tasks"></div>
+   <br>
+    </div>
+    </div>
+   
+   
+       <script>
+	   
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+	   </script>
+	   
+</body>
+
+</html>

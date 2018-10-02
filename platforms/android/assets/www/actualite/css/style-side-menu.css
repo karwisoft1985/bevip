@@ -1,0 +1,78 @@
+@CHARSET "UTF-8";
+/********************************** SLIDE MENU ****************************/
+/********************************** MENU ****************************/
+.nav{	
+list-style:none;padding:0;margin:0;padding-top:40px;
+background: -moz-linear-gradient(left, #DDD8D5 70%, #B7B3B0 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, left bottom, color-stop(70%,#DDD8D5), color-stop(100%,#B7B3B0)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left, #DDD8D5 70%,#B7B3B0 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(top, #DDD8D5 70%,#B7B3B0 100%); /* Opera 11.10+ */
+background: -ms-linear-gradient(left, #DDD8D5 70%,#B7B3B0 100%); /* IE10+ */
+background: linear-gradient(left, #DDD8D5 70%,#B7B3B0 100%);      
+}
+
+.nav > a >li{
+height:50px;
+border-top:1px solid #BFBFBF;
+border-bottom:1px solid #BFBFBF;
+padding:10px;
+text-decoration:none;
+}
+ul li a {
+color: #333;
+text-decoration:none;
+}
+.menu:hover{
+height:50px;
+border-top:1px solid #949494;
+border-bottom:1px solid #949494;
+background: #D0CBC7;
+}
+
+.list{
+display:inline;
+}
+.imglist{
+display:inline;
+float:left;
+}
+.text-a-la-une{
+font-size:20px;
+font-weight:bold;
+font-family:Helvetica,sans-serif;
+display:inline;
+padding-left:10px;
+padding-top:10px;
+float:left;}
+.textlist{
+font-size:16px;
+font-weight:bold;
+font-family: Helvetica,sans-serif;
+display:inline;
+padding-left:10px;
+padding-top:10px;
+float:left;
+color:#333;}
+#btlist-ville,#btlist-dep,#btlist-diap,#btlist-foot,#btlist-rugby,#btlist-dep{
+display:inline;
+float:right;
+backrgound:url('../images/hdpi/bt_menu_wrapper.png');
+}
+/********************************** SOUS MENU ****************************/
+#sousMenu-ville,#sousMenu-diap,#sousMenu-foot,#sousMenu-rugby,#sousMenu-dep{
+	list-style:none;
+	display:none;
+	margin-left:-40px;
+	postion:relative;
+	border-bottom:1px solid #949494;
+	background: #D0CBC7;
+}
+#sousMenu-ville > a > li,#sousMenu-diap > a > li,#sousMenu-foot > a > li,#sousMenu-rugby > a > li,#sousMenu-dep > a > li{
+height:20px;
+padding:10px;
+border-bottom:1px solid #000;
+text-decoration:none;
+font-size:18px;
+font-weight:bold;
+font-family: Helvetica,sans-serif;
+}

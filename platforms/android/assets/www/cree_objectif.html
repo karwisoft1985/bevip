@@ -1,0 +1,447 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+ <head>
+ <!-- style pour le navigation scrollable  -->
+    <link rel="stylesheet" href="assets/css/scrollmenu.css">
+        
+  <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  
+  
+  <title>Bevip</title>
+        
+        <!-- debut appel fichies css et js -->
+		
+        <script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js_web_service/gestion_taches/gestion_tache.js"></script>
+		<script src="js_web_service/login/info_connect.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+		<script src="js_web_service/gestion_taches/objectif.js"></script>
+		
+		<style>
+		 input.mm-search::-webkit-input-placeholder {
+              color: #fff;
+            }
+
+            input.mm-search:-moz-placeholder { /* Firefox 18- */
+               color: #fff;  
+             }
+
+            input.mm-search::-moz-placeholder {  /* Firefox 19+ */
+              color: #fff;  
+           }
+
+           input.mm-search:-ms-input-placeholder {  
+             color: #fff;  
+           }
+		   
+		   
+		   ::-webkit-input-placeholder {
+              color: #aaaaaa;
+            }
+
+            :-moz-placeholder { /* Firefox 18- */
+               color: #aaaaaa;  
+             }
+
+            ::-moz-placeholder {  /* Firefox 19+ */
+              color: #aaaaaa;  
+           }
+
+           :-ms-input-placeholder {  
+             color: #aaaaaa;  
+           }
+		
+		
+		</style>
+        <script src="js_web_service/login/notification.js"></script>	
+		<script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+        <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+        <script type='text/javascript' src='assets/js/langue.json'></script>
+        <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>	
+		<script>
+		 var db = openDatabase("bevip", "1.0", "bevip", 200000);
+       var dataset;
+       var DataType;
+      function placeholders() {
+	  db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, result) {
+
+                                dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];
+      if(lang=="fr"){
+       document.querySelector("input[type=text][class=mm-search]").setAttribute("placeholder", "Partenaires, projets, et plus...");
+	   }
+       else if (lang == 'ar'){
+	   document.querySelector("input[type=text][class=mm-search]").setAttribute("placeholder", "...شركاء، مشاريع، و المزيد");
+      }
+	  else {
+	   document.querySelector("input[type=text][class=mm-search]").setAttribute("placeholder", "Partners, projects, and more..");
+      }
+  });
+  });
+      }
+
+      $(document).ready(placeholders);
+
+	 </script> 	
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+			
+		</script>
+	       <script type="text/javascript">
+	 function placeholderst() {
+  db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, result) {
+
+                                dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];
+
+if(lang=="fr"){
+  document.querySelector("input[type=text][class=input-plan-tasks]")
+  .setAttribute("placeholder", "Nom de la tâche");}
+   else if (lang == 'ar'){
+	 document.querySelector("input[type=text][class=input-plan-tasks]")
+  .setAttribute("placeholder", "إسم المهمة");
+}
+					 else {
+				 document.querySelector("input[type=text][class=input-plan-tasks]")
+  .setAttribute("placeholder", "Task name");
+        }
+ }); 
+ }); 
+}
+
+$(document).ready(placeholderst);
+	
+function habitude(){
+var habit = document.getElementById("plan-habitude").checked;
+if (habit == true){
+document.getElementById('date_debut').style.display='none';
+document.getElementById('datefin').style.display='none';
+document.getElementById('frequency').style.display='none';
+}
+else{
+document.getElementById('date_debut').style.display='block';
+document.getElementById('datefin').style.display='block';
+document.getElementById('frequency').style.display='block';
+}
+}
+function rappeler(){
+var rap = document.getElementById("plan-rappel").checked;
+if (rap == true){
+document.getElementById('heurerappel').style.display='block';
+}
+else{
+document.getElementById('heurerappel').style.display='none';
+}
+}	  
+ </script> 	   
+	
+
+</head>
+
+<body>
+
+<div id="element" class="introLoading"></div>
+<div style="position:fixed;width:100%">
+				<div class="header-bvp">
+ <div class="left-header-bvp">
+			 
+				<a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+	<span style="display:none">			
+<a href="rechercher.html"><input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:65%"  />
+
+    <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+</a></span>
+			
+			<nav id="menu">
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="salons.html"><i class="fa fa-calendar" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="salon" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+								 <li><a href="langue.html"><i class="fa fa-globe" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="langage" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+
+				  </ul>
+			</nav>
+			</div>	
+</div>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li>
+				     
+					 
+					 <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 
+				  <a href="store.html">
+				  <li class="current-nav">
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a> 
+				  
+				 <a href="tasks.html">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				   <a href="support.html">
+					<li>
+				    <i class="fa fa-shopping-cart" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+        </div>
+
+		<!-- fin bloc menu de navigation -->	
+		
+	<div id="contenu" style="padding-top:130px">	
+			<div id="cat"></div>
+			
+			
+     <div style="padding:20px;">
+			     
+     <input type="text" class="input-plan-tasks" style="width:100%;"  id="title" /><br><br>
+     <input type="checkbox" id="plan-habitude" onchange="javascript:habitude()" checked /> <label id='habitude' class="label-form"></label>
+	 <br><br>	
+	 <span id="date_debut" style="display:none">				  
+	 <label><span id='date_deb' class="label-form"></span></label><br>
+	 <input type="date" id="plan-date-debut" class="input-plan-tasks" style="width:100%;" />
+	  <br><br></span>				
+	  <span id="datefin" style="display:none">
+	  <label><span id='date_fin' class="label-form"></span></label><br>
+	  <input type="date" id="plan-date-fin" class="input-plan-tasks" style="width:100%;" />
+	  <br><br>
+	  </span>
+ <input type="checkbox" id="plan-rappel" onchange="javascript:rappeler()" /> <label id='rappel' class="label-form"></label>				 
+				  <br><br>
+				  <span id="heurerappel" style="display:none">
+				  <select id="heure-rappel" class="select-plan-tasks"  style="width:100%;">
+				  <option value="heure_deb" id="hrdb"></option>
+				  <option value="10_min" id="10m"></option>
+				  <option value="30_min" id="30m"></option>
+				  <option value="1_h" id="1h"></option>
+				  </select>
+				  <br><br>
+				  </span>	 			  
+	  <label><span id='heure_deb' class="label-form"></span></label><br>
+	  <input type="time" id="plan-heure-jour"  class="input-plan-tasks" style="width:100%;" />
+	  <br><br>
+	  <label><span id='heure_fin' class="label-form"></span></label><br>
+	  <input type="time" id="plan-heure-fin"  class="input-plan-tasks" style="width:100%;" />
+	  <br><br>
+	  <span id="frequency" style="display:none">
+	  <label ><span id='freq' class="label-form"></span></label><br>
+	  <select id="frequence" class="select-plan-tasks" style="width:100%;">
+	  <optgroup id="type"></optgroup>
+	  </select>
+	  <br></span>
+				 
+				 
+	  </div>
+			 
+			 			<div class="modal fade" id="myModalfreqobj" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel"><span id='choix_jours'></span></h4>
+      </div>
+      <div class="modal-body">
+				<div class="bl-plan-semaine">
+				  
+				  <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				  
+				     <input type="checkbox" id="checkSemaine1" name="checkSemaine" /><br>
+				 <span id='lundi'></span>
+				  </div>
+				  
+				  
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine2" name="checkSemaine"/><br>
+				     <span id='mardi'></span>
+					 
+					 
+				  </div>
+				  
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine3" name="checkSemaine"/><br>
+				     <span id='mercredi'></span>
+					 
+					 
+				   </div>
+				   
+				   
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine4" name="checkSemaine" /><br>
+				     <span id='jeudi'></span>
+					 
+					 
+				   </div>
+				   
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine5" name="checkSemaine" /><br>
+				     <span id='vendredi'></span>
+					 
+					 
+				   </div>
+				   
+				   <div style="display:inline-block;width:32%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine6" name="checkSemaine"/><br>
+				    <span id='samedi'></span>
+					 
+				   </div>
+				   
+				   
+				   <div style="display:inline-block;width:100%;padding:10px;text-align:center;">
+				   
+				     <input type="checkbox" id="checkSemaine7" name="checkSemaine"/><br>
+				 <span id='dimanche'></span>
+					 
+					 
+				   </div>
+				   
+				   
+				   </div>
+				   </div>
+      <div class="modal-footer">
+        <button type="button"onclick="javascript:personnalisecreatetasks();"  class="btn btn-primary"><span id='valider'></span></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal"><span id='close'></span></button>
+      </div>
+    </div>
+  </div>
+</div>
+				  
+				  
+				  
+				  
+				 <a href="javascript:createtasks();">
+			 
+			      <div class="bottom-partage" style="float:right;width:40%;background:#ff5722;">
+			 
+		               <span id='save'></span> <i class="fa fa-chevron-right" style="color:#fff;float:right;margin-right:20px;margin-top:-17px;" aria-hidden="true"></i>
+		
+		          </div>
+			
+			     </a>
+			
+			
+			<br><br>
+			 
+		      
+	         	    
+			 
+		 
+	
+		
+        </div>
+
+    
+  
+     
+  
+   
+   
+   
+   
+   
+   
+       <script>
+	   
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+	   </script>
+	   
+</body>
+
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html>
+
+ <head>    <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+		<title>Bevip</title>
+		<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		
+		<link href="dist/css/introLoader.css" rel="stylesheet">
+        <script src="dist/helpers/jquery.easing.1.3.js"></script>
+        <script src="dist/helpers/spin.min.js"></script>
+        <script src="dist/jquery.introLoader.js"></script>
+
+      <script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+      <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+      <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>   
+       <script src='js_web_service/gestion_partenaire/recherche_partenaire.js'></script>   
+ <script>
+ 	$(document).ready(function () {
+			 document.addEventListener("offline",chkOffline,false);
+		
+            function chkOffline()
+            {
+              document.getElementById("search-cnx").innerHTML = "<div style='text-align:center;padding-top:100px'><img src='assets/img/wifi-off.png' /><br><br>";
+               	var userLang = navigator.language || navigator.userLanguage; 
+	
+if(userLang=="fr-FR" || userLang=="fr-CA"|| userLang=="fr-BE"|| userLang=="fr-CH"|| userLang=="fr-LU" || userLang=="fr-MC"){
+   document.getElementById("search-cnx").innerHTML += "<h2 style='color:#ff5722;text-transform:uppercase;margin-left:2%''>Vérifier votre connexion Internet</h2></div>";
+	 }
+	 else if (userLang == 'ar-EG' || userLang == 'ar-TN' || userLang == 'ar-SA'|| userLang == 'ar-DZ'|| userLang == 'ar-YE'|| userLang == 'ar-JO'|| userLang == 'ar-KW'|| userLang == 'ar-BH'|| userLang == 'ar-QA'|| userLang == 'ar-AE'|| userLang == 'ar-LB'|| userLang == 'ar-SY'|| userLang == 'ar-MA'|| userLang == 'ar-OM'|| userLang == 'ar-IQ'|| userLang == 'ar-LY'){
+   document.getElementById("search-cnx").innerHTML += "<h2 style='color:#ff5722;text-transform:uppercase;margin-left:2%''>تثبت من الانترنت </h2></div>";
+	 }
+else{
+   document.getElementById("search-cnx").innerHTML += "<h2 style='color:#ff5722;text-transform:uppercase'>Check your internet connection</h2></div>";
+}
+}
+	          			
+
+       });
+ function placeholders() {
+var lang = navigator.language || navigator.language; 
+if(lang=="fr-FR" || lang=="fr-CA"|| lang=="fr-BE"|| lang=="fr-CH"|| lang=="fr-LU"){
+  document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "Partenaires, projets, et plus...");}
+   else if (lang == 'ar-EG' || lang == 'ar-TN'|| lang == 'ar-SA'|| lang == 'ar-DZ'|| lang == 'ar-YE'|| lang == 'ar-JO'|| lang == 'ar-KW'|| lang == 'ar-BH'|| lang == 'ar-QA'|| lang == 'ar-AE'|| lang == 'ar-LB'|| lang == 'ar-SY'|| lang == 'ar-MA'|| lang == 'ar-OM'|| lang == 'ar-IQ'|| lang == 'ar-LY'){
+	 document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "...شركاء، مشاريع، و المزيد");
+}
+					 else {
+				 document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "Partners, projects, and more...");
+        }
+  
+}
+
+$(document).ready(placeholders);
+
+	 </script> 		
+	
+<script>
+function goBack() {
+    window.history.back();
+}
+</script>
+</head>
+
+<body>
+
+
+<!-- debut bloc  header-bvp -->
+
+<div style="position:fixed;width:100%; ">
+<div class="header-bvp">
+
+	<div class="left-header-bvp" >
+
+		
+		
+		<span onclick="goBack()" style="margin-right:20px;"><i class="fa fa-arrow-left" aria-hidden="true" style="color:#fff; font-size:20px" ></i></span>
+
+ <input type="text" class="mm-search" name="partenaire" id="partenaire" onchange="part_group();"  style=" background-color: #0099cc; color: #fff; border: none; width:78%" autofocus />
+<i class="fa fa-search" style="color:#fff; font-size:18px" onclick="part_group();"></i>				
+	</div>
+			  
+			  
+
+			  
+</div>
+
+        </div>
+
+
+	<div id="contenu"  >	
+		
+	<div id="search-cnx" >	
+	<div id="aj_part_grp" class="alert alert-success" role="alert" style="display:none; width:100%;"><br><br><center><span id='part_grp'></span></center></div>
+
+		<div id="partners_group">
+		</div>
+		
+        </div>
+        </div>
+
+  
+   
+
+	   
+</body>
+
+</html>

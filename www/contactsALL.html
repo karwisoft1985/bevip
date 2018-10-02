@@ -1,0 +1,445 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+	<!-- style pour le navigation scrollable  -->
+    <link rel="stylesheet" href="assets/css/scrollmenu.css">
+        
+        <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+        <link rel="stylesheet" type="text/css" href="assets/css/index.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<title>Bevip</title>
+		<script src="assets/js/jquery.min.js"></script>
+		<script type="text/javascript" src="cordova.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js_web_service/login/info_connect.js"></script>
+		<script src="js_web_service/login/modifier_photo.js"></script>
+		<script src="js_web_service/gestion_invitation/afficher_partenaires.js"></script>
+		<!--<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />-->
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.0.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		<script src="js_web_service/main/main.js"></script>
+		
+		
+		<link href="dist/css/introLoader.css" rel="stylesheet">
+        <script src="dist/helpers/jquery.easing.1.3.js"></script>
+        <script src="dist/helpers/spin.min.js"></script>
+        <script src="dist/jquery.introLoader.js"></script>
+		
+		
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: 'Partners'
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+		</script>
+		
+		
+		<!--<script src="js_web_service/gestion_contacts/list_contactsALL.js"></script>-->
+		
+		
+		<script src="js_web_service/gestion_contacts/display_contacts_all.js"></script>
+        <script type="text/javascript" src="src/iscroll.js"></script>
+
+<script type="text/javascript">
+
+var myScroll,
+	pullDownEl, pullDownOffset,
+	pullUpEl, pullUpOffset,
+	generatedCount = 0;
+
+function pullDownAction () {
+
+var db = openDatabase("bevip", "1.0", "bevip", 200000);
+var dataset;
+var DataType;
+   
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+	
+	   // initContact();
+	   
+	   
+		db.transaction(refreshContactsAll());
+	    myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+		
+		
+		
+	},3000);	// <-- Simulate network congestion, remove setTimeout from production!
+	
+	//location.reload();
+}
+
+function pullUpAction () {
+
+	setTimeout(function () {	// <-- Simulate network congestion, remove setTimeout from production!
+		
+		/*
+		var el, li, i;
+		el = document.getElementById('thelist');
+
+		for (i=0; i<3; i++) {
+			li = document.createElement('li');
+			li.innerText = 'Generated row ' + (++generatedCount);
+			el.appendChild(li, el.childNodes[0]);
+		}
+		*/
+		myScroll.refresh();		// Remember to refresh when contents are loaded (ie: on ajax completion)
+	}, 1000);	// <-- Simulate network congestion, remove setTimeout from production!
+}
+
+function loaded() {
+	pullDownEl = document.getElementById('pullDown');
+	pullDownOffset = pullDownEl.offsetHeight;
+	pullUpEl = document.getElementById('pullUp');	
+	pullUpOffset = pullUpEl.offsetHeight;
+	
+	myScroll = new iScroll('wrapper', {
+		useTransition: true,
+		topOffset: pullDownOffset,
+		onRefresh: function () {
+			if (pullDownEl.className.match('loading')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+			} else if (pullUpEl.className.match('loading')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+			}
+		},
+		onScrollMove: function () {
+			if (this.y > 5 && !pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'flip';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Release to refresh...';
+				this.minScrollY = 0;
+			} else if (this.y < 5 && pullDownEl.className.match('flip')) {
+				pullDownEl.className = '';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Pull down to refresh...';
+				this.minScrollY = -pullDownOffset;
+			} else if (this.y < (this.maxScrollY - 5) && !pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'flip';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Release to refresh...';
+				this.maxScrollY = this.maxScrollY;
+			} else if (this.y > (this.maxScrollY + 5) && pullUpEl.className.match('flip')) {
+				pullUpEl.className = '';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Pull up to load more...';
+				this.maxScrollY = pullUpOffset;
+			}
+		},
+		onScrollEnd: function () {
+			if (pullDownEl.className.match('flip')) {
+				pullDownEl.className = 'loading';
+				pullDownEl.querySelector('.pullDownLabel').innerHTML = 'Loading...';				
+				pullDownAction();	// Execute custom function (ajax call?)
+			} else if (pullUpEl.className.match('flip')) {
+				pullUpEl.className = 'loading';
+				pullUpEl.querySelector('.pullUpLabel').innerHTML = 'Loading...';				
+				pullUpAction();	// Execute custom function (ajax call?)
+			}
+		}
+	});
+	
+	setTimeout(function () { document.getElementById('wrapper').style.left = '0'; }, 800);
+}
+
+document.addEventListener('touchmove', function (e) { e.preventDefault(); }, false);
+
+document.addEventListener('DOMContentLoaded', function () { setTimeout(loaded, 200); }, false);
+
+
+</script>
+
+<style type="text/css" media="all">
+body,ul,li {
+	padding:0;
+	margin:0;
+	border:0;
+}
+
+body {
+	
+}
+
+
+
+
+
+#wrapper {
+	position:absolute; 
+	z-index:1;
+	top:120px;
+bottom:48px; left:-9999px;
+	width:100%;
+	background:#aaa;
+	overflow:auto;
+}   
+
+#scroller {
+	position:absolute; z-index:1;
+/*	-webkit-to0ch-callout:none;*/
+	-webkit-tap-highlight-color:rgba(0,0,0,0);
+	width:100%;
+	padding:0;
+}
+
+#scroller ul {
+	list-style:none;
+	padding:0;
+	margin:0;
+	width:100%;
+	text-align:left;
+}
+
+#scroller li {
+
+
+padding:10px;
+border-bottom:1px solid #ddd;
+padding-bottom:20px;
+background:#fff;
+	
+}
+
+#myFrame {
+	position:absolute;
+	top:0; left:0;
+}
+
+
+
+/**
+ *
+ * Pull down styles
+ *
+ */
+#pullDown, #pullUp {
+	background:#fff;
+	height:40px;
+	line-height:40px;
+	padding:5px 10px;
+	border-bottom:1px solid #ccc;
+	font-weight:bold;
+	font-size:14px;
+	color:#888;
+}
+#pullDown .pullDownIcon, #pullUp .pullUpIcon  {
+	display:block; float:left;
+	width:40px; height:40px;
+	background:url(pull-icon@2x.png) 0 0 no-repeat;
+	-webkit-background-size:40px 80px; background-size:40px 80px;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:250ms;	
+}
+#pullDown .pullDownIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+#pullUp .pullUpIcon  {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullDown.flip .pullDownIcon {
+	-webkit-transform:rotate(-180deg) translateZ(0);
+}
+
+#pullUp.flip .pullUpIcon {
+	-webkit-transform:rotate(0deg) translateZ(0);
+}
+
+#pullDown.loading .pullDownIcon, #pullUp.loading .pullUpIcon {
+	background-position:0 100%;
+	-webkit-transform:rotate(0deg) translateZ(0);
+	-webkit-transition-duration:0ms;
+
+	-webkit-animation-name:loading;
+	-webkit-animation-duration:2s;
+	-webkit-animation-iteration-count:infinite;
+	-webkit-animation-timing-function:linear;
+}
+
+@-webkit-keyframes loading {
+	from { -webkit-transform:rotate(0deg) translateZ(0); }
+	to { -webkit-transform:rotate(360deg) translateZ(0); }
+}
+
+</style>
+	<script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+      <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+      <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>
+</head>
+<body>
+
+<div id="element" class="introLoading"></div>
+
+<div class="header-bvp">
+
+	<div class="left-header-bvp">
+
+		<!--<a href="bots.html"><i style="font-size:25px;color:#fff;margin-top:5px; margin-right:5px"  class="fa fa-comments-o" aria-hidden="true"></i></a>-->
+		
+		<span id="return" style="display:none;margin-right:20px;"><a href="tasks.html"><i class="fa fa-arrow-left" aria-hidden="true" style="color:#fff; font-size:30px" ></i></a></span>
+		<a href="bots.html"><img src="assets/img/i_2.png" id="logo" style="width:12%;margin-right:5px;"/> </a>
+		<span class="dropdown">
+		
+                 <a href="profile.html"><span id="image" ></span></a>
+			   
+        </span>
+
+					
+					<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> 
+			  
+	</div>
+			  
+			  
+	<div class="right-header-bvp">
+		 <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:25px;color:#fff;margin-top:5px;margin-right:10px" aria-hidden="true"></i></a>	     
+		<a href="contactsALL.html"><i class="fa fa-address-book" style="font-size:25px;color:#fff;margin-top:5px;" aria-hidden="true"></i></a>
+			  
+	</div>
+			  
+</div>
+	
+	
+        <div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html" target="_blank">
+				 <li >
+				     
+					 
+					 <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 
+				 
+				<!-- <a href="video.html" target="_blank">
+				  <li>
+				     
+					 <i class="fa fa-caret-square-o-right" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='video'></span>
+					 
+				 
+				  </li>
+				 </a>-->
+				 
+				 <a href="tasks.html" target="_blank">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html" target="_blank">
+				 
+				 <li>
+				     
+					 
+					 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 
+				  <a href="store.html" target="_blank">
+				  
+				  <li>
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='project'></span>
+					 
+				 
+				  </li>
+				  
+				  </a> 
+				  
+				  
+				  
+				  
+				  
+				   
+				 
+
+	    </div>
+	
+	
+
+</div>
+
+
+<div id="wrapper">
+	<div id="scroller">
+	
+		<div id="pullDown">
+		
+		    <span class="pullDownIcon"></span><span class="pullDownLabel"><span id='pull_down'></span>...</span>
+		
+		</div>
+
+		<ul id="thelist">
+		
+		
+			
+		</ul>
+		
+		
+		<div id="pullUp">
+		
+			<span class="pullUpIcon"></span><span class="pullUpLabel"><span id='pull_up'></span>...</span>
+			
+			
+		</div>
+		
+		
+	</div>
+	
+	
+</div>
+
+
+
+<script>
+	   
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+</script>
+
+</body>
+</html>

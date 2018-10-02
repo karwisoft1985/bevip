@@ -1,0 +1,223 @@
+@CHARSET "UTF-8";
+ a{color:#000;text-decoration:none;}
+#parametre{
+	display:block;
+	width:100%;
+	margin-top:130px;
+	}
+#personalisation{display:none;}
+#bloc-param{display:block;width:100%;}
+#autourdemoi{display:block;}
+#bloc-personalisation-sport{dipsplay:none;width:100%;}
+#bloc-personalisation-actu{dipsplay:none;width:100%;}
+#bloc-personalisation-enimage{dipsplay:none;width:100%;	}
+#bloc-geolocatisation{display:none;width:100%;	}
+#pos-geo{height:50px;}
+#img-ut-pos{position:relative;right:0px;}
+#bloc-pos{
+display:none;text-decoration:none;
+background:#ddd;
+border:1px solid #7F7F7F;
+width:100%;
+height:500px;
+font-family:Helvetica,sans-serif;
+}
+#bloc-entete{
+display:block;
+height:50px;
+border-bottom:2px solid #EC1C24;
+}
+#bloc-ville,#bloc-departement{display:inline-block}
+#bloc-ville{	
+padding-top:10px;
+position:absolute;
+left:20px;
+}
+#bloc-ville:hover{
+padding-top:10px;
+font-size:18px;
+position:absolute;
+left:20px;
+}
+#bloc-departement{
+padding-top:10px;
+position:absolute;
+right:20px;
+}
+#bloc-departement:hover{
+padding-top:10px;
+position:absolute;
+right:20px;
+font-size:18px;
+}
+#bloc-ville > a{
+text-decoration:none;
+color:#333;	
+}
+#bloc-departement > a{
+text-decoration:none;
+color:#333;	
+}
+#list-param{
+list-style:none;
+}
+#list-param > a > li
+{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000
+}
+#list-param > a > li:hover,#list-param > a > li:hover > span{
+color:#fff;
+background:#EC1C24;
+}
+#list-bloc-ville{
+display:none;
+list-style:none;
+}
+#list-bloc-ville > a > li
+{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000
+}
+#list-bloc-ville > a > li:hover{
+border-bottom:1px solid #BFBFBF;
+color:#fff;
+text-decoration:none;
+background:#EC1C24;
+}
+#list-bloc-departement{
+list-style:none;
+display:none;
+}
+#list-bloc-departement > a > li
+{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000
+}
+#list-bloc-departement > a > li:hover{
+border-bottom:1px solid #BFBFBF;
+color:#fff;
+text-decoration:none;
+background:#EC1C24;
+}
+#list-bloc-position{
+list-style:none;
+display:none;
+width:100%;
+}
+#list-bloc-position > a > li
+{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000
+}
+#list-bloc-position > a > li:hover{
+border-bottom:1px solid #BFBFBF;
+color:#fff;
+text-decoration:none;
+background:#EC1C24;
+}
+#text-sport{
+padding:20px;
+display:none;
+}
+#list-sport{
+display:none;	
+list-style:none;
+}
+#list-sport > a > li
+{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000
+}
+#list-sport > a > li:hover{
+border-bottom:1px solid #BFBFBF;
+color:#fff;
+text-decoration:none;
+background:#EC1C24;
+}
+#text-actu{
+display:none;
+margin:0px;	
+}
+#list-actu{
+margin:0px;	
+display:none;	
+list-style:none;
+}
+#list-actu> a > li
+{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000
+}
+#list-actu > a > li:hover{
+border-bottom:1px solid #BFBFBF;
+color:#fff;
+text-decoration:none;
+background:#EC1C24;
+}
+#text-image{
+padding:20px;
+display:none;
+}
+#list-image{
+display:none;	
+list-style:none;
+}
+#list-image > a > li
+{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000;
+}
+#list-image > a > li:hover{
+border-bottom:1px solid #BFBFBF;
+color:#fff;
+text-decoration:none;
+background:#EC1C24;
+}
+#text-ut-pos{
+padding:20px;
+display:none;
+}
+#list-bloc{
+display:none;	
+list-style:none;
+}
+#list-bloc > a > li{
+padding:10px;
+height:40px;
+background:#fff;
+border-bottom:1px solid #BFBFBF;
+color:#000;
+}
+#list-bloc > a > li:hover{
+border-bottom:1px solid #BFBFBF;
+color:#fff;
+text-decoration:none;
+background:#EC1C24;
+}
+#preference-geo,#preference-sport,#preference-actu,#preference-image{
+color:#666;
+position:absolute;
+right:10px;
+}

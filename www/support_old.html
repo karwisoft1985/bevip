@@ -1,0 +1,330 @@
+﻿<!doctype html>
+<html>
+<head>
+  <meta http-equiv="Content-Security-Policy" content="text/html" charset="utf-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="msapplication-tap-highlight" content="no">
+  <meta name="viewport" content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width">
+  <title>Bevip</title>
+       
+        <script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/jquery.js"></script>
+	<script src="cordova.js"></script>
+	
+		<script type="text/javascript" src="assets/js/autocomplete/countries.js"></script>
+		<script src="assets/js/autocomplete/jquery.autocomplete.js"></script>
+		<script src="assets/js/application.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js_web_service/login/info_connect.js"></script>	
+		<script src="js_web_service/main/send.js"></script>	
+	   <script src="js_web_service/gestion_statistique/statistiques.js"></script>
+		<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+		<script type="text/javascript" src="chatbox.js"></script>
+		<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+		<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+		<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+		<link type="text/css" rel="stylesheet" href="cb_style.css" />
+		
+		<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+		<link rel="stylesheet" href="assets/css/scrollmenu.css">
+		
+	   <script src="js_web_service/login/notification.js"></script>
+	   <script src="js_web_service/login/check_cnx.js"></script>
+	   <script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+       <script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+       <script type='text/javascript' src='assets/js/langue.json'></script>
+       <script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>
+	   <script type='text/javascript'>
+	   //<![CDATA[
+$(document).ready(function () {
+var node = document.getElementById('beginrecord');
+var touchduration = 1000;
+var onlongtouch; 
+var time;
+var start = function (e) {
+time = setTimeout(onlongtouch, touchduration); 
+};
+var cancel = function (e) {
+if(time){
+	clearTimeout(time); 
+		var mymedia = new Media("/android_asset/www/assets/beep-24.mp3",function() {},function(err) { });
+		mymedia.play();		
+	endRecorder();
+	}
+};
+
+onlongtouch = function() {
+var my_media = new Media("/android_asset/www/assets/beep-21.mp3",  function() {}, function(err) {});
+			my_media.play();
+			startRecorder();
+};
+//node.addEventListener("mousedown", start);
+node.addEventListener("touchstart", start);
+//node.addEventListener("click", click);
+//node.addEventListener("mouseup", cancel);
+//node.addEventListener("mouseout", cancel);
+node.addEventListener("touchend", cancel);
+//node.addEventListener("touchleave", cancel);
+//node.addEventListener("touchcancel", cancel);
+});//]]> 
+
+function playaudio(src){
+var m = new Media(src,  function() {}, function(err) {});
+m.play();
+}
+
+</script>
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+		</script>
+
+ <script type="text/javascript">
+	  $(document).ready(function(){
+var userLang = navigator.language || navigator.userLanguage;
+
+if(userLang=="fr-FR" || userLang=="fr-CA"|| userLang=="fr-BE"|| userLang=="fr-CH"|| userLang=="fr-LU"){
+ document.getElementById("message").placeholder = "tapez ici!";
+ }
+else if (userLang == 'ar-EG' || userLang == 'ar-TN'|| userLang == 'ar-SA'|| userLang == 'ar-DZ'|| userLang == 'ar-YE'|| userLang == 'ar-JO'|| userLang == 'ar-KW'|| userLang == 'ar-BH'|| userLang == 'ar-QA'|| userLang == 'ar-AE'|| userLang == 'ar-LB'|| userLang == 'ar-SY'|| userLang == 'ar-MA'|| userLang == 'ar-OM'|| userLang == 'ar-IQ'|| userLang == 'ar-LY'){
+ document.getElementById("message").placeholder = "!اكتب هنا";
+ }
+					 else {
+ document.getElementById("message").placeholder = "Type here!";
+					}							
+	  });
+ document.addEventListener('deviceready', function () {
+	  var Lang = navigator.language || navigator.userLanguage; 
+        var u = new SpeechSynthesisUtterance();      
+		if(Lang=="fr-FR" || Lang=="fr-CA"|| Lang=="fr-BE"|| Lang=="fr-CH"|| Lang=="fr-LU"){
+		u.lang = 'fr-FR';
+		u.text='Vous pouvez partager vos offres et vos services avec la communauté Bevip';
+		}
+		else {
+		u.lang = 'en-US';
+		u.text='You can share your offers and services with the Be vip community';
+		} 
+        speechSynthesis.speak(u);   
+     
+	 });
+
+		
+$(window).bind('click', function(event) { if(event.target.href) $(window).unbind('beforeunload'); }); 
+ $(window).bind('beforeunload', function(event) {     
+ speechSynthesis.cancel();
+ });
+ 
+document.addEventListener("resume", onResume, false);
+function onResume() {
+   speechSynthesis.cancel();
+}
+ 
+	 </script> 	
+
+</head>
+<body onbeforeunload="signInForm.signInButt.name='signOut';" class="bodychat" onload="hideShow('hide');signInOut();" >
+<!-- debut bloc  header-bvp -->
+
+
+<div  style="position:fixed;width:100%;">
+
+<div class="header-bvp">
+
+   <div class="left-header-bvp">
+			 
+				<a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+				<span style="display:none">
+               <a href="rechercher.html"><input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:65%"  />
+
+                   <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+
+			   </a></span>
+			
+			<nav id="menu">
+			
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+                    			 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+					</ul>
+					
+					
+			</nav>
+			
+   </div>	
+	
+<!--<span id="nbajout" style="float:right; margin-top:10px"></span>-->
+		
+</div>
+
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li>
+				     <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 
+				 <a href="store.html">
+				  <li>
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a>
+				  
+				 <a href="tasks.html">
+				 
+				 <li>
+				    <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html">
+				 
+				 <li>
+				 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="support.html">
+					<li class="current-nav">
+				    <i class="fa fa-comments" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+        </div>
+		
+					<form  id="signInForm">
+					<input id="userName" type="text" style="display:none" />
+					<input id="signInButt" name="signIn" type="submit" value="Sign in" style="display:none" >
+					<span id="signInName" style="display:none"></span>
+					</form>
+<div id="msg-err-cnx">
+					<div id="chatBox" class="chatBox">  </div>
+					<form onsubmit="sendMessage();return false" id="messageForm"> 
+					<div style="z-index: 99;">
+					<span  id="beginrecord" style="position: fixed;z-index: 99;bottom: 3px; height: 46px; margin-left:2px;width:10%;border-radius:50%; padding-top:3%;background: #ff5722; border:none;">
+					<center><span style="border-radius:50%" >
+					<i class="fa fa-microphone" style="color:#fff;"></i></span>
+					<!--<input id="qty-bottom" value="1">-->
+					<!--<span id="stoprecord" style="display:none;"><i class="fa fa-microphone-slash" onclick="endRecorder()" style="color:#fff;"></i></span>-->
+					<!--<span id="timecounter" style="color:#666;"></span>-->
+					</center>
+					</span>
+				<div class="textarea input-group">
+				<input class="form-control" id="message" type="text" style="color: #666;width:68%; position: fixed;box-shadow: none;right: 21%;height: 50px;border: none;padding-left: 5px;padding-right: 5px;color: #666;border-radius: 30px;" required="required"/>
+				<button type="submit" style="z-index: 99;background: none;color:#ff5722;float:right;margin-right:2%;padding-right:0px;font-size:25px;margin-top:2%;border:none;" />
+				<i class="fa fa-arrow-circle-right" ></i>
+				</button>
+				</div>
+				<span style="z-index: 99;position: fixed;bottom: 3px; height: 46px; width:10%;border-radius:50%; margin-left:89%;padding-top:3%;background: #ff5722; border:none;">
+					<center><a data-toggle="modal" data-target="#myModalChoixPhoto">
+					<i class="fa fa-camera" style="color:#fff;"></i>
+					</a></center>
+					</span>
+					</div>
+					</form>
+				
+					<div class="modal fade" id="myModalChoixPhoto" style="top:20%" artabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                     <div class="modal-dialog" >
+                     <div class="modal-content">
+					
+                     <div class="form-group">
+					        <br>
+							<div style="display:inline-block;width:40%;text-align:center;">
+							<a href="javascript:takephotoURL()"> <img src="assets/img/camera.png" style="width:30px;"/> </a><br>
+							<span id='appareil_photo'></span>
+							</div>
+						   <div style="display:inline-block;width:40%;text-align:center;">
+							<a href="javascript:choosePhoto()"> <img src="assets/img/landscape.png" style="width:30px;"/> <a><br>
+							<span id='gallerie'></span>
+							</div>					   	   
+					</div>
+					 </div>
+					 </div>
+					 </div> 
+					
+					  <div class="modal fade" id="myModalphoto" artabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+					<div class="modal-dialog" >
+					<div class="modal-content">
+					 <div>
+					<div class="modal-header" style="border-bottom:none;opacity:1px;" >
+					<button type="button" class="close"data-dismiss="modal" aria-hidden="true">&times;</button>						  
+                    <h4 class="modal-title" id="myModalLabel" style="text-align:center;font-size:20px;padding:15px;"><span id='change_photo'></span></h4>		
+					</div>
+					</div>
+					 <div class="form-group">
+					 <center>					
+					<br> <input type="button" onclick="takephotoURL()" value="Take Photo"/>
+					<br><br>  <img src="" id="myImageUrl" height="200px" width="200px"/></center>
+					</div>
+					</div>
+					 </div>	 
+					</div>
+
+						 <div class="modal fade" id="myModalphotog" artabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                     <div class="modal-dialog" >
+					 <div class="modal-content">					  
+                        <div>
+						<div class="modal-header" style="border-bottom:none;opacity:1px;">						 
+                                <button type="button" class="close"data-dismiss="modal" aria-hidden="true">&times;</button>
+                               <h4 class="modal-title" id="myModalLabel" style="text-align:center;font-size:20px;padding:15px;"><span id='change_photo'></span></h4>									    
+						     </div>
+							 </div>    
+                         <div class="form-group">
+					        <center>
+                                <br> <input type="button" onclick="choosePhoto()" value="Choose photo"/>
+                                <br><br><img src="" id="lib" height="200px" width="200px">                        
+					       	</center>
+							</div>  
+					    </div>						
+					  </div> 
+					</div>
+	</div>				
+					<!--<div class="emojis"></div>
+					<textarea rows="2" class="textarea"  id="message"  type="text" style="color: #666;"></textarea>			
+					<input id="send" type="submit" value="Envoyer" >
+					-->
+					
+</body>
+</html>					

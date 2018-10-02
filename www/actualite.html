@@ -1,0 +1,1817 @@
+﻿<!doctype html>
+<html>
+
+<head> 
+
+<!-- style pour le navigation scrollable  -->
+    <!--<link rel="stylesheet" href="assets/css/scrollmenu.css">-->
+
+				<script src="actualite/js/jquery-2.1.1.min.js"></script>  
+				<script type="text/javascript" src="cordova.js"></script>
+				<script src="js_web_service/login/info_connect.js"></script>
+				<!--<script src="js_web_service/login/notification.js"></script>-->
+				<script src="js_web_service/gestion_taches/calendar.js"></script>
+				<script src="js_web_service/main/notif_msg.js"></script>
+				<link href="actualite/css/style-flux-rss.css" rel="stylesheet" type="text/css" />
+				<link rel="stylesheet" type="text/css" href="actualite/css/style-side-menu.css" />
+				<link rel="stylesheet" type="text/css" href="actualite/css/style.css" />
+				<link rel="stylesheet" type="text/css" href="assets/css/index.css">
+				<link rel="stylesheet" type="text/css" href="assets/css/font.css">
+				<link rel="stylesheet" type="text/css" href="assets/css/font-awesome.css">
+				<link rel="stylesheet" type="text/css" href="assets/css/bootstrap.min.css">
+				<link type="text/css" rel="stylesheet" href="assets/css/demo.css" />
+				<link type="text/css" rel="stylesheet" href="assets/css/jquery.mmenu.all.css" />
+				<link rel="stylesheet" href="assets/css/pageslider.css">
+				<link rel="stylesheet" type="text/css" href="actualite/css/style.css" />
+				<link href="dist/css/introLoader.css" rel="stylesheet">
+				
+				<script type="text/javascript" src="assets/js/jquery.mmenu.all.min.js"></script>
+				
+				<script src="dist/helpers/jquery.easing.1.3.js"></script>
+				<script src="dist/helpers/spin.min.js"></script>
+				<script src="dist/jquery.introLoader.js"></script>
+				<script type='text/javascript' src='assets/js/jstranslate/jquery.i18n.js'></script>
+				<script type='text/javascript' src='assets/js/jquery.langue.json'></script>
+				<script type='text/javascript' src='assets/js/langue.json'></script>
+				<script type='text/javascript' src='assets/js/jstranslate/translate.js'></script>
+				<script src="js_web_service/gestion_taches/sqlite.js"></script>
+				<script src="js_web_service/gestion_taches/update_habitude.js"></script>
+				 <script src="js_web_service/gestion_statistique/statistiques.js"></script>
+
+		 <script>
+  var db = openDatabase("bevip", "1.0", "bevip", 200000);
+       var dataset;
+       var DataType;
+ function placeholders() {
+db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, result) {
+
+                                dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];
+if(lang=="fr"){
+  document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "Partenaires, projets, et plus...");}
+   else if (lang == 'ar'){
+	 document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "...شركاء، مشاريع، و المزيد");
+}
+					 else {
+				 document.querySelector("input[type=text]")
+  .setAttribute("placeholder", "Partners, projects, and more..");
+        }
+});  
+});  
+}
+
+$(document).ready(placeholders);
+
+	 </script> 	
+		<script type="text/javascript">
+		
+			$(function() {
+				$('nav#menu').mmenu({
+					extensions	: [ 'effect-slide-menu', 'shadow-page', 'shadow-panels' ],
+					counters	: true,
+					navbar 		: {
+						title		: '<img src="assets/img/logo.png" id="logo" style="width:70px;margin-right:5px;"/> '
+					},
+					navbars		: [
+						{
+							position	: 'top',
+							content		: [
+								'prev',
+								'title',
+								'close'
+							]
+						}
+					]
+				});
+			});
+			
+			
+		</script>
+		
+       <script type="text/javascript">
+	   var pays;
+	   
+	$(document).ready(function () {
+	
+	        
+             document.addEventListener("online",chkOnline,false);
+			 document.addEventListener("offline",chkOffline,false);
+			function chkOnline()
+            {
+			                       db.transaction(function(tx) {tx.executeSql("select pays from utilisateur ", [] ,
+								    
+									function(tx, result) {
+									dataset = result.rows;
+							
+									for ( var i = 0, item = null; i < dataset.length; i++) {
+										item = dataset.item(i);
+										var pays= item['pays']; 
+										sessionStorage.setItem("pays_util", pays);
+										} 
+										var pays_util=sessionStorage.getItem("pays_util");
+										db.transaction(function(tx) {tx.executeSql("select * from journal where nom_pay= '" + pays_util + "'", [] ,
+		
+								        function(tx, result) {
+										
+									    dataset = result.rows;
+
+	                                      var div='<div style="padding-top:20px;padding-bottom:20px;background-image:url(actualite/images/old-newspaper.jpg);">';
+	                                      div+='<center><div> ';
+											
+							                    for ( var i = 0, item = null; i < dataset.length; i++) {
+													item = dataset.item(i);
+													item0 = dataset.item(0);
+													var logo_journal0= item0['logo_journal'];
+                                                    <!-- var lien_flux0= item0['lien_flux']; -->
+													var lien_flux0=item0['lien_flux'];
+										            var logo_journal= item['logo_journal'];
+                                                    var lien_flux= item['lien_flux'];
+													var typeRss0= item0['type_rss'];
+													var typeRssN=item['type_rss'];
+													div+='<a href="actualite.html?flux='+lien_flux+'&&logo='+logo_journal+'&&typeRss='+typeRssN 
+													div+='" target="_blank"><IMG  src="actualite/images/journaux/'+logo_journal
+													div+='" style="margin-right:10px;" ></a>';
+										         }		                              
+		                                    div+='</div></center>';
+	                                        var div2=''; 
+		                                    div2+='<a href="#"><IMG  src="actualite/images/journaux/'+logo_journal0+'"></a>'; 
+		                                    document.getElementById("logo-journal").innerHTML=div2;
+		                                    document.getElementById("list-journ").innerHTML=div;
+		                                    readFLUXRSS(lien_flux0,typeRss0);
+		                                    
+											});					   
+		                                    });
+		                                    });					   
+		                                    });
+            
+			}
+            function chkOffline()
+            {
+              location.href="offline.html";
+			}
+			
+			
+			
+		});
+
+            function readFLUXRSS(flux,typeNo) {
+			var url = window.location.search;
+			
+			if (url.length != 0){
+			
+			
+			 var flux = url.substring(url.indexOf("http://"), url.indexOf("&&logo="));
+			 var logo = url.substring(url.indexOf("&&logo=") +7, url.indexOf("&&typeRss="));
+			 var typeNo = url.substring(url.indexOf("&&typeRss=") +10, url.length);
+			 
+			 var div2=''; 
+			 div2+='<a href="#"><IMG  src="actualite/images/journaux/'+logo+'"></a>'; 
+             document.getElementById("logo-journal").innerHTML=div2;
+			 
+			 
+			}
+			switch(typeNo){
+			
+			
+				case "1" : 
+				case "7" : 
+				case "10" : 
+				case "11" :
+				case "14" :
+		    $.ajax( {
+            type: "GET",
+            url: flux,
+            dataType: "xml",
+            success: function(xml) 
+                     {
+						var $items=$(xml).find('item');
+		<!-- *****************************************	start working with the first node  ************************************************** -->
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//xml with enclosure tag
+						 //urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url');
+						 var urlImg="";
+						if($items[0].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+							}
+						
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+						//localStorage.setItem("description0"+i," default link elemnt de "); 
+						localStorage.setItem("typeNo0"+i,typeNo);
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//image de l'article
+						// urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url');
+						var urlImg="";
+						if($items[i].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+						
+						var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+						
+						}
+					
+						//titre de l'article
+						
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+						//localStorage.setItem("description"+i,"null"); 	
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+                      }
+        });				
+           
+		   //case 1 est terminer
+		   break;
+		   
+		   	case "4" :
+		   	case "2" :
+			case "20":
+			case "27":
+		
+			
+		    $.ajax( {
+            type: "GET",
+            url: flux,
+            dataType: "xml",
+            success: function(xml) 
+                     {
+					
+						var $items=$(xml).find('item');
+		                <!-- *******************************start working with the first node  *********************************** -->
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//img was found in description tag 
+						var extract_image = $items[0].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.indexOf("src=")+5);
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						//description complet de l'article
+						description="";
+						var extract_description=$items[0].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+						description=extract_description.substring(extract_description.indexOf("</p>"+4),extract_description.length);
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   description	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+						localStorage.setItem("description0"+i,description); 
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//img was found in description tag 
+						var extract_image = $items[i].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.indexOf("src=")+5);
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						//description complet de l'article
+						description="";
+						var extract_description=$items[i].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+						description=extract_description.substring(extract_description.indexOf("</p>")+4,extract_description.length);
+						//titre de l'article
+						 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+						localStorage.setItem("description"+i,description); 		
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+                      }
+        });	
+		  
+		  break;
+		  	case "3" :
+			case "12" :
+			case "13" :
+			case "18" :
+			case "19" :
+			
+			$.ajax({
+					type : 'GET',
+					url : flux,
+					dataType : 'text',
+					success : function(xml){
+					
+					
+					
+					var myXml=xml;
+					myXml=myXml.replace(/media:content/g,"enclosure");
+					myXml=myXml.replace(/media:thumbnail/g,"enclosure");
+					myXml=myXml.replace(/thumbimage/g,"enclosure");
+					myXml=myXml.replace(/guid/g,"link");
+					
+					<!-- alert(myXml); -->
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml,"text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					<!-- alert(link_article); -->
+					var urlImg="";
+							if($items[0].getElementsByTagName('enclosure').length){
+							urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+										}
+						
+						
+						
+				
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						<!-- alert(title); -->
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+					
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 <!-- alert(title); -->
+						//image de l'article
+						var urlImg="";
+						 if($items[i].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+							 urlImg=urlImg.replace("240","120");
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+							
+							}
+						
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						urlImg=urlImg.replace("120","240");
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+								
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+		  break;
+			
+			case "5":
+			case "6":
+
+		    $.ajax( {
+            type: "GET",
+            url: flux,
+            dataType: "xml",
+            success: function(xml) 
+                     {
+					
+						var $items=$(xml).find('item');
+		<!-- *******************************start working with the first node  *********************************** -->
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//img was found in description tag 
+						var extract_image = $items[0].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.indexOf("src=")+5);
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   description	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+					
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//img was found in description tag 
+						var extract_image = $items[i].getElementsByTagName('description')[0].childNodes[0].nodeValue;
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.indexOf("src=")+5);
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						//titre de l'article
+						 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);	
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+                      }
+        });	
+		  
+		  break;
+		  case "8" :
+		  case "9" :
+			<!-- alert("type 3"); -->
+					$.ajax({
+					type : 'GET',
+					url : flux,
+					dataType : 'text',
+					success : function(xml){
+					var myXml=xml;
+					myXml=myXml.replace(/media:thumbnail/g,"content");
+										myXml=myXml.replace(/content:encoded/g,"content");
+
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml, "text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					<!-- alert(link_article); -->
+					var urlImg="";
+						var extract_image = $items[0].getElementsByTagName('content')[0].childNodes[0].nodeValue;
+						<!-- alert(extract_image); -->
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.indexOf("src=")+5);
+						
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						// urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url');
+				
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						<!-- alert(title); -->
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+					
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 <!-- alert(title); -->
+						//image de l'article
+						  <!-- urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); -->
+						 <!-- urlImg=urlImg.replace("240","120"); -->
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						 //date de publication
+						var urlImg="";
+							
+						var extract_image = $items[i].getElementsByTagName('content')[0].childNodes[0].nodeValue;
+						<!-- alert(extract_image); -->
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.lastIndexOf("src=")+5,extract_image.length);
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						
+						
+						
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+								
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+		  break;
+		  
+		  	case "15" :
+			<!-- alert("type 3"); -->
+					$.ajax({
+					type : 'GET',
+					url : flux,
+					dataType : 'text',
+					success : function(xml){
+					var myXml=xml;
+					
+					<!-- alert(myXml); -->
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml,"text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					<!-- alert(link_article); -->
+
+						urlImg=$items[0].getElementsByTagName('photo')[0].childNodes[0].nodeValue; 
+
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						var description=$items[0].getElementsByTagName('text')[0].firstChild.nodeValue;
+			
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+						localStorage.setItem("description0"+i,description);
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						
+						urlImg=$items[i].getElementsByTagName('photo')[0].childNodes[0].nodeValue; 
+						
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						var description=$items[i].getElementsByTagName('text')[0].firstChild.nodeValue;
+			
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+				
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+						localStorage.setItem("description"+i,description);
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+		  break;
+		  case "16" :
+		
+					$.ajax({
+					type : 'GET',
+					url : flux,
+					dataType : 'text',
+					success : function(xml){
+					var myXml=xml;
+
+					myXml=myXml.replace(/content:encoded/g,"content");
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml, "text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					<!-- alert(link_article); -->
+					var urlImg="";
+						var extract_image = $items[0].getElementsByTagName('content')[0].childNodes[0].nodeValue;
+						<!-- alert(extract_image); -->
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.indexOf("src=")+5);
+						
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						// urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url');
+				
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						<!-- alert(title); -->
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+					
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 <!-- alert(title); -->
+						//image de l'article
+						  <!-- urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); -->
+						 <!-- urlImg=urlImg.replace("240","120"); -->
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						 //date de publication
+						var urlImg="";
+							
+						var extract_image = $items[i].getElementsByTagName('content')[0].childNodes[0].nodeValue;
+						<!-- alert(extract_image); -->
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.lastIndexOf("src=")+5,extract_image.length);
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						
+						
+						
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+								
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+		  break;
+		  
+		  case "17" :
+		  case "28" :
+		  case "29" :
+				
+		    $.ajax( {
+            type: "GET",
+            url: flux,
+            dataType: "xml",
+            success: function(xml) 
+                     {
+						var $items=$(xml).find('item');
+		<!-- *****************************************	start working with the first node  ************************************************** -->
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//xml with enclosure tag
+						 //urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url');
+						 var urlImg="";
+						if($items[0].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+							}
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						
+						var description =$items[0].getElementsByTagName('description')[0].firstChild.nodeValue;
+						
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+						localStorage.setItem("description0"+i,description); 
+						localStorage.setItem("typeNo0"+i,typeNo);
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//image de l'article
+						// urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url');
+						var urlImg="";
+						if($items[i].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+						
+						var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						var description =$items[i].getElementsByTagName('description')[0].firstChild.nodeValue;
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+						
+						}
+					
+						//titre de l'article
+						
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+						localStorage.setItem("description"+i,description); 	
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+                      }
+        });				
+           
+		   break;
+		   
+		   case "21" :
+			
+			$.ajax({
+					type : 'GET',
+					url : flux,
+					dataType : 'text',
+					success : function(xml){
+					
+					
+					
+					var myXml=xml;
+					
+				
+					myXml=myXml.replace(/yandex:full-text/g,"descriptionComplet");
+					
+					<!-- alert(myXml); -->
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml,"text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					
+					<!-- alert(link_article); -->
+					var urlImg="";
+							if($items[0].getElementsByTagName('enclosure').length){
+							urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+										}
+						
+						var description="";
+					description=$items[0].getElementsByTagName('descriptionComplet')[0].childNodes[0].nodeValue;
+						
+				
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						<!-- alert(title); -->
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+						localStorage.setItem("description0"+i,description); 
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 <!-- alert(title); -->
+						//image de l'article
+						var urlImg="";
+						 if($items[i].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+							 urlImg=urlImg.replace("240","120");
+						 <!-- alert(urlImg); -->
+							var description="";
+					description=$items[i].getElementsByTagName('descriptionComplet')[0].childNodes[0].nodeValue;
+						
+						
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+							
+							}
+						
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						urlImg=urlImg.replace("120","240");
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+						localStorage.setItem("description"+i,description); 
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+		  break;
+		  
+		  
+		   case "22" :
+	
+					$.ajax({
+					type : 'GET',
+					url : "http://www.lerumstidning.se/kategori/nyheter/feed/",
+					dataType : 'text',
+					success : function(xml){
+					var myXml=xml;
+
+					myXml=myXml.replace(/content:encoded/g,"content");
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml, "text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					<!-- alert(link_article); -->
+					var urlImg="";
+						var extract_image = $items[0].getElementsByTagName('content')[0].childNodes[0].nodeValue;
+						<!-- alert(extract_image); -->
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.indexOf("src=")+5);
+						
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						// urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url');
+				
+					
+					
+					
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						<!-- alert(title); -->
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+						localStorage.setItem("description0"+i,extract_image); 
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 <!-- alert(title); -->
+						//image de l'article
+						  <!-- urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); -->
+						 <!-- urlImg=urlImg.replace("240","120"); -->
+					
+						//titre de l'article
+						 //date de publication
+						var urlImg="";
+							
+						var extract_image = $items[i].getElementsByTagName('content')[0].childNodes[0].nodeValue;
+						<!-- alert(extract_image); -->
+						if(extract_image.indexOf("src=") != -1){
+						extract_image=extract_image.substring(extract_image.lastIndexOf("src=")+5,extract_image.length);
+						extract_image=extract_image.replace(/"/g, "'");							
+						urlImg = extract_image.substring(0,extract_image.indexOf("'"));
+						}
+						
+						
+					
+						
+						
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+						localStorage.setItem("description"+i,extract_image); 	
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+		  break;
+		  
+		  case "23" :
+		  case "24" :
+		  case "25" :
+		  case "26" :
+
+		  
+					$.ajax({
+					type : 'GET',
+					url : flux ,
+					dataType : 'text',
+					success : function(xml){
+					var myXml=xml;
+					myXml=myXml.replace(/media:content/g,"enclosure");
+					myXml=myXml.replace(/media:thumbnail/g,"enclosure");
+					myXml=myXml.replace(/thumbimage/g,"enclosure");
+					myXml=myXml.replace(/guid/g,"link");
+					
+					<!-- alert(myXml); -->
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml,"text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					<!-- alert(link_article); -->
+					var urlImg="";
+					
+							if($items[0].getElementsByTagName('enclosure').length){
+							urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+										}
+						
+						
+						
+				
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						<!-- alert(title); -->
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+					
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 <!-- alert(title); -->
+						//image de l'article
+						var urlImg="";
+						 if($items[i].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+							 urlImg=urlImg.replace("240","120");
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+							
+							}
+						
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						urlImg=urlImg.replace("120","240");
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+								
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+ break;
+		  
+		  default:
+db.transaction(function(tx) {tx.executeSql("select lang from utilisateur where id_utilisateur='1'", [] ,
+		
+								function(tx, result) {
+
+                                dataset = result.rows;
+								
+								item = dataset.item(0);
+								
+								var lang = item['lang'];
+if(lang == 'ar'){
+$.ajax( {
+            type: "GET",
+            url: flux,
+            dataType: "xml",
+            success: function(xml) 
+                     {
+						var $items=$(xml).find('item');
+		<!-- *****************************************	start working with the first node  ************************************************** -->
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//xml with enclosure tag
+						 //urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url');
+						 var urlImg="";
+						if($items[0].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+							}
+						
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+						//localStorage.setItem("description0"+i," default link elemnt de "); 
+						localStorage.setItem("typeNo0"+i,typeNo);
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						//image de l'article
+						// urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url');
+						var urlImg="";
+						if($items[i].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+						
+						var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+						
+						}
+					
+						//titre de l'article
+						
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+						//localStorage.setItem("description"+i,"null"); 	
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+                      }
+        });	
+}
+else{
+$.ajax({
+					type : 'GET',
+					url : flux ,
+					dataType : 'text',
+					success : function(xml){
+					var myXml=xml;
+					myXml=myXml.replace(/media:content/g,"enclosure");
+					myXml=myXml.replace(/media:thumbnail/g,"enclosure");
+					myXml=myXml.replace(/thumbimage/g,"enclosure");
+					myXml=myXml.replace(/guid/g,"link");
+					
+					<!-- alert(myXml); -->
+					parser = new DOMParser();
+					xmlDoc = parser.parseFromString(myXml,"text/xml");
+
+					var $items=xmlDoc.getElementsByTagName("item");
+					var link_article="";
+					link_article=$items[0].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+					<!-- alert(link_article); -->
+					var urlImg="";
+					
+							if($items[0].getElementsByTagName('enclosure').length){
+							urlImg=$items[0].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+										}
+						
+						
+						
+				
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						var title = $items[0].getElementsByTagName('title')[0].firstChild.nodeValue;
+						<!-- alert(title); -->
+						//date de publication
+						var pubDate="";
+						pubDate= $items[0].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+
+						custum_first_div="";
+						custum_first_div+='<div id="img-article">';
+						custum_first_div+='<div style="background-image:url('+"'"+urlImg+
+						"'"+');display:inline-block;position:relative;width:100%;height:250px;background-size:100% 250px;">'
+						custum_first_div+="<div id='description-article-flux-rss'>";
+						custum_first_div+="<div id='sujet-article-flux-rss'>";
+						custum_first_div+='<a href="article-alaune.html?inc=00" target="_blank">'+title.substring(0,300)+"</a></div>";
+						custum_first_div+="</div>	</div	</div>";	
+						
+						<!-- *****************seesion de la premier resultat id=0  -->
+						<!-- titre de larticle        :   title					   -->
+						<!-- description de larticle  :   article_description 	   -->
+						<!-- lien de larticle         :   link_article 			   -->
+						<!-- image de larticle        :   urlImg 				   -->
+						<!-- *******variable de sessions********** -->
+						i=0;
+						localStorage.setItem("image0"+i,urlImg);
+						localStorage.setItem("titre0"+i,title);
+						localStorage.setItem("lien0"+i, link_article);
+						localStorage.setItem("pubDate0"+i,pubDate);
+					
+						localStorage.setItem("typeNo0"+i,typeNo);
+
+		<!-- **********************************remplir la liste view************************************************************* -->
+						//construct the view list
+						var custum_table_div="<table class='list-flux-rss'>";
+						for (i = 1; i <  $items.length; i++) {
+						//find the link of the first node
+						var link_article="";
+						link_article=$items[i].getElementsByTagName('link')[0].childNodes[0].nodeValue;
+						<!-- alert(link_article); -->
+							 var title = $items[i].getElementsByTagName('title')[0].firstChild.nodeValue;
+						 <!-- alert(title); -->
+						//image de l'article
+						var urlImg="";
+						 if($items[i].getElementsByTagName('enclosure').length != 0){
+						urlImg=$items[i].getElementsByTagName('enclosure')[0].getAttribute('url'); 
+							 urlImg=urlImg.replace("240","120");
+						 <!-- alert(urlImg); -->
+						//titre de l'article
+						 //date de publication
+						 var pubDate="";
+						pubDate= $items[i].getElementsByTagName('pubDate')[0].firstChild.nodeValue;
+						
+						pubDate=pubDate.substring(0,pubDate.lastIndexOf(":"));
+						
+						
+						custum_table_div+='<tr style="border-bottom:2px solid #ddd;">';
+						custum_table_div+='<td style="padding-left:10px;"><a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank">';
+						custum_table_div+='<div>'+'<img src='+"'"+urlImg+"'"+'title="Image article" width="68px" heigth="50px"/></a></div></td>';
+						custum_table_div+="<td height='50px' style='padding-left:10px'>";
+						custum_table_div+='<a href="article-alaune.html?inc=' +i+'" '+ 'target="_blank"><div>'+title+"</div></a></td>";
+						custum_table_div+='</tr>';
+							
+							}
+						
+
+						<!-- *******variable de sessions********** -->
+						// titre de larticle        :   title
+						// lien de larticle         :   link_article
+						// image de larticle        :   urlImg
+						urlImg=urlImg.replace("120","240");
+						localStorage.setItem("image"+i,urlImg);
+						localStorage.setItem("titre"+i,title);
+						localStorage.setItem("lien"+i, link_article);
+						localStorage.setItem("pubDate"+i,pubDate);
+								
+						localStorage.setItem("typeNo"+i,typeNo);
+						
+					   }
+						custum_table_div+='</table>';
+						document.getElementById("fluxRSS").innerHTML = custum_first_div+custum_table_div+"<br><br><br><br><br>";
+  },
+  error : function(data) {
+  
+     alert(JSON.stringify(data));
+  }
+});
+}
+});
+});
+		  break;
+
+			}//fin switch
+
+		   }//fin function 
+
+	 </script>
+
+</head>
+					<body>
+
+						<!--<div id="element" class="introLoading"></div>-->
+   
+				<div class="header-bvp">
+ <div class="left-header-bvp">
+			 
+				<a href="#menu"><i class="fa fa-list" aria-hidden="true" style="color:#fff;font-size:20px"></i></a>
+<span style="display:none">				
+<a href="rechercher.html">
+<input type="text" class="mm-search" name="partenaire" id="partenaire" style=" background-color: #0099cc; color: #fff; border: none; width:65%"  />
+    <i class="fa fa-search" style="color:#fff; font-size:18px"></i>
+</a></span>
+			
+			<nav id="menu">
+					<ul style="width:300px;">
+					
+								 <li id="partners" style="width:300px;"></li>		
+								 <li><a href="profile.html"><span id="image"></span><label id="profil" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li> <a href="evaluation.html"><i class="fa fa-check-square-o" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="evaluation" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="bots.html"><img src="assets/img/i_2.png" style="width:38px;"/> <label id="coash" style="color:#fff;font-size:16px"></label></a></li>		
+								 <li><a href="video.html"><i class="fa fa-caret-square-o-right" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="video" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="salons.html"><i class="fa fa-calendar" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="salon" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								 <li><a href="books.html"><i class="fa fa-book" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="book" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>		
+								<li><a href="langue.html"><i class="fa fa-globe" style="font-size:28px;color:#fff;" aria-hidden="true"></i>	<label id="langage" style="color:#fff;font-size:16px; margin-left:10px"></label></a></li>
+					</ul>
+			</nav>
+			</div>	
+<!--<span id="nbajout" style="float:right; margin-top:10px"></span>	-->	
+</div>
+
+						
+
+						<div id="contenu">
+		
+		
+						<!-- debut bloc menu de navigation -->	
+				<div class="nav-bar-bvp" >			     
+				 
+				 <a href="actualite.html">
+				 <li class="current-nav">
+				     
+					 
+					 <i class="fa fa-home" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='actualite'></span>
+					 
+				 
+				 </li>
+				 </a>
+				 
+				   <a href="store.html">
+				  <li>
+				     
+					 
+					  <i class="fa fa-shopping-bag" aria-hidden="true"  style="color:#ff5722;font-size:30px;"></i><br>
+					  <span id='project'></span>
+					 
+				 
+				  </li>
+				  </a> 
+				  
+				 <a href="tasks.html">
+				 
+				 <li >
+				     
+					 
+					 <i class="fa fa-tasks" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='tasks'></span>
+					 
+				 
+				 </li>
+				 
+				 </a>
+				 
+				 <a href="statistics.html">
+				 
+				 <li>
+				 <i class="fa fa-signal"  aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					 <span id='statistics'></span>
+				 </li>
+				 
+				 </a>
+				 
+			<a href="support.html">
+					<li>
+				    <i class="fa fa-shopping-cart" aria-hidden="true" style="color:#ff5722;font-size:30px;"></i><br>
+					<span id='partner'></span>					 				 
+					</li>
+					</a>
+   
+	     </div>
+	
+						<div id="logo-journal" style="text-align:center;padding:10px;background:url(actualite/images/hdpi/back.png) repeat-x;">
+	
+		</div>
+
+
+						</div>
+		
+						<div id="side">
+				
+						</div>
+						
+						<div id="sidr">
+				
+						</div>
+
+						<div id="fluxRSS">
+									
+			
+						</div>
+		
+						<div id="list-journ" style="position:fixed;bottom:0px;width:100%;">
+
+						</div>
+
+						<script>
+			$(function() {
+				$("#element").introLoader();
+            });
+			
+   </script>
+
+					</body>
+</html>
